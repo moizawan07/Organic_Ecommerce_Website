@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    outline: none;
+    list-style: none;
+    text-decoration: none;
+}
+body{
+    background-color: black;
+}
+.header{
+    width: 100%;
+    background-color: #212121;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   padding-left: 35px;
+   padding-right: 10px;
+}
+.logo span{
+    color: rgb(235, 174, 8);
+    font-size: 45px;
+    font-family: "Oleo Script", serif;
+    font-weight: 200;
+    margin-right: 3px;
+}
+
+.header img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* mix-blend-mode: multiply; */
+}
+.logo h2{
+    color: aliceblue;
+}
+.searchbar{
+    width: 500px;
+    height: 35px;
+    align-content: center;
+    border: 1px solid rgb(120, 116, 116);
+    color: rgb(150, 146, 146);
+    border-radius: 10px;
+}
+.searchbar input{
+    width: 90%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: rgb(149, 145, 145);
+    padding-left: 15px;
+}
+::placeholder{
+    color: rgb(170, 168, 168);
+}
+.settings i{
+    color: grey;
+    margin-right: 15px;
+    cursor: pointer;
+}
+#down{
+    position: absolute;
+    bottom: 17.1px;
+   left: 31.2px;
+}
+#main{
+    margin-bottom: 5px;
+}
+.settings{
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.two-side-main-conatiner{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+}
+.left-main-con{
+    padding-top: 20px;
+    width: 18%;
+    position: sticky;
+    top: 0px;
+    background-color: #333333;
+}
+.right-main-con{
+    /* background-color: whitesmoke; */
+    /* background-color: black; */
+    padding-top: 30px;
+    padding-inline: 3px;
+    width: 82%;
+    /* min-height: 100vh; */
+}
+.first-haid {
+    padding-left: 5%;
+}
+.first-haid p{
+    font-size: 12px;
+   font-weight: 200;
+   font-family: "Oleo Script", serif;
+    color: rgb(235, 174, 8);
+    letter-spacing: 0.5px;
+}
+.first-ul{
+    margin-top: 10px;
+}
+li .icon{
+    color: white;
+    margin-right: 20px;
+}
+.first-ul li{
+    padding-left: 11px;
+   line-height: 40px;
+    align-content: center;
+    margin-top: 2px;
+}
+.first-ul li:hover{
+    background-color: #FF0000;
+}
+#firsli{
+    background-color: #FF0000;
+}
+#firsli:hover{
+    background-color: transparent;
+    border: 1px solid rgb(230, 225, 225);
+}
+li .text{
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+}
+.hr{
+    margin-top: 20px;
+    border: 0.7px solid grey;
+}
+#SECOND-HEAD{
+    margin-top: 15px;
+}
+.right-first-hedr{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+.right-first-header-card1{
+    display: flex;
+    width: 270px;
+    padding-top: 25px;
+    padding-inline: 2.5%;
+    justify-content: space-between;
+    color: white;
+    height: 125px;
+    transition: transform 0.5s ease-in-out, box-shadow 0.1s;
+    &:hover{
+        transform: translateY(-8px);
+    }
+}
+.right-first-header-card1 h1{
+    font-weight: bold;
+    font-size: 25px;
+}
+.right-first-header-card1 h3{
+    margin-left: 20px;
+}
+.right-first-header-card1 i{
+    font-size: 70px;
+}
+#rcard1{background-color: red;     box-shadow: 0px 4px 3px red,    0px -4px 3px red}
+#rcard2{background-color: #FFC400; box-shadow: 0px 4px 3px #FFC400, 0px -4px 3px #FFC400}
+#rcard3{background-color: #00D247; box-shadow: 0px 4px 3px #00D247, 0px -4px 3px #00D247}
+#rcard4{background-color: #2669FF; box-shadow: 0px 4px 3px #2669FF, 0px -4px 3px #2669FF}
+#rcard2 h3,#rcard4 h3{
+    margin-left: 0px;
+    font-size: 17px;
+}
+#rcard3 h3{
+    margin-left: 5px;
+    font-size: 17px;
+}
+.right-section2{
+    padding-top: 30px;
+    width: 97%;
+    margin: 30px auto;
+   padding-inline: 5px;
+    /* background-color: white; */
+    background-color: #333333;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+}
+.rs2-first-line{
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 30px;
+}
+.rs2-first-line h2{
+    font-size: 19px;
+    font-weight: 500;
+}
+.rs2-first-line button{
+    width: 60px;
+    height: 25px;
+    border:none;
+    margin-left: 5px;
+    border-radius: 3px;
+    backdrop-filter: blur(100px);
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        background: rgb(224, 223, 223);
+        border: 1px dotted white;
+        transform: scale(1.15);
+    }
+}
+#ad{
+   color: white;
+   border: none;
+   background-color: #0852f0;
+}
+
+/* .rs2-second-line{
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+} */
+
+table{
+    width: 97%;
+    border: 2px solid green;
+    margin: 30px 20px;
+    text-align: center;
+    width: 95%;
+    border-collapse: collapse;
+    border-radius: 3px;
+    overflow: hidden;
+    color: white;
+    background-color: rgb(21, 21, 21);
+    padding: 10px;
+    /* border-color: #21addb; */
+}
+th{
+    font-weight: 200;
+    color: whitesmoke;
+    font-size: 18px;
+    padding: 10px;
+}
+td{
+    font-size: 15px;
+    font-weight: 200;
+    padding: 5px;
+    color: white;
+}
+tr{
+    border: 1px solid green;
+    border:  1px double rgb(243, 97, 44);
+    border-color: #04a7dd;
+    line-height: 40px;
+}
+tr button{
+    background-color: red;
+    color: white;
+    padding-inline: 15px;
+    padding-block: 4px;
+    border: none;
+    border-radius: 3px;
+}
+
+table tr td img{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    position: relative;
+    top: 7px;
+}
+.sno{
+    color: #4239E5;
+    color: #3cc0eb;
+}
+#ordeli,#firsli{
+    cursor: pointer;
+}
+
+.right-section3{
+  display: none;
+}
+
+#rem{
+    display: none;
+}
+#bar{
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 75px;
+    left: 8px;
+}
+.orderRemove{
+    &:hover{
+        color: #FF0000;
+    }
+    &:active{
+        transition: all 0.8s ease-in;
+        transform: translateY(-105px);
+    }
+}
+
+@media (max-width:500px){
+    .mini-screen{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .header{
+        padding-left: 15px;
+        padding-right: 5px;
+        flex-direction: column;
+        align-items: start;
+        row-gap: 10px;
+        padding-block: 5px;
+    }
+    .text{
+        display: none;
+    }
+    .first-haid p{
+        display: none;
+    }
+    .logo h2{
+        font-size: 20px;
+    }
+    .logo span{
+        font-size: 36px;
+    }
+    .searchbar{
+        width: 90%;
+        margin: auto;
+    }
+    #rem{
+        display: flex;
+    }
+    .header img{
+        width: 40px;
+        height: 40px;
+    }
+    .settings{
+        display: none;
+    }
+    .left-main-con{
+        width: 7%;
+        min-height: 100vh;
+    }
+    .first-ul li{
+        padding-left: 5px;
+        line-height: 60px;
+    }
+    .first-ul li i{
+        font-size: 15px;
+    }
+    .right-main-con{
+        width: 90%;
+    }
+    .rs2-first-line{
+        padding-inline: 10px;
+        font-size: 14px;
+    }
+    .rs2-first-line h2 {
+        font-size: 15px;
+    }
+    .rs2-first-line button {
+        width: 50px;
+        height: 20px;
+        font-size: 12px;
+    }
+    table {
+        width: 100%;
+        margin: 30px auto;
+    }
+    th{
+        font-size: 13px;
+    }
+    td{
+        font-size: 12px;
+    }
+    tr button {
+        padding-inline: 5px;
+        padding-block: 3px;
+        font-size: 11px;
+    }
+}
+.edit{
+    transition: all 0.5s ease-in;
+    &:hover{
+        color: #05b13f;
+    }
+}
+.delete{
+    transition:   0.5s ease-in;
+    &:hover{
+        color: crimson;
+    }
+}
+.edit:active,.delete:active{
+    font-size: 55px !important;
+  transform: translateY(-5px);
+}

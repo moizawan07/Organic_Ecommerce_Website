@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce-Website</title>
+    <link rel="stylesheet" href="dash.css">
+    <script src="https://kit.fontawesome.com/7e4bb5f098.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <div class="container">
+     <div class="header" id="dash_header">
+      <div class="mini-screen">
+          <div class="logo">
+             <h2><span>M</span>oiz <span>A</span>hmed</h2>
+           </div>
+           <div class="settings" id="rem">
+            <i  class="fa-solid fa-sun"></i>
+            <!-- <i id="main" class="fa-solid fa-grip"></i> -->
+            <!-- <i id="down" class="fa-solid fa-grip"></i> -->
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <i class="fa-solid fa-bell"></i>
+            <div  class="admin-img">
+              <img  src="../Images/admin-img.png" alt="">
+            </div>
+          </div>
+      </div>
+      <i id="bar" onclick="dashboardSidebar()" class="fa-solid fa-bars"></i>
+        <div class="searchbar">
+           <input type="text" onkeyup="(filterUserOrders())"  id="Serching" placeholder="Serch..">
+           <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="settings">
+          <i class="fa-solid fa-sun" id="theme_icon" onclick="themeChanged()"></i>
+          <i id="main" class="fa-solid fa-grip"></i>
+          <i id="down" class="fa-solid fa-grip"></i>
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+          <i class="fa-solid fa-bell"></i>
+          <div class="admin-img">
+            <img src="../Images/admin-img.png" alt="">
+          </div>
+        </div>
+     </div>
+     <div class="two-side-main-conatiner">
+        <div class="left-main-con"> 
+             <div class="first-haid">
+               <p>MAIN</p>
+             </div>
+                <ul class="first-ul">
+              <li onclick="dashboardUserData()" id="firsli"><span class="icon"><i class="fa-solid fa-feather"></i></span><span class="text">Dashboard</span></li>
+              <li>
+              <a href="../Home pages/home.html"> <span class="icon"><i class="fa-brands fa-soundcloud"></i></span><span class="text">E-commerce</span> </a> </li>
+              <li><span class="icon"><i class="fa-solid fa-leaf"></i></span><span class="text">Apps</span></li>
+              <li><span class="icon"><i class="fa-solid fa-award"></i></span><span class="text">Widgets</span></li>
+              <hr class="hr">
+                </ul>
+            <div class="first-haid" id="SECOND-HEAD">
+            <p>COMPONENT</p>
+            </div>
+               <ul class="first-ul">
+           <li><span class="icon"><i class="fa-brands fa-airbnb"></i></span><span class="text">UI Elemnts</span></li>
+           <li><span class="icon"><i class="fa-solid fa-spinner"></i></span><span class="text">Forms</span></li>
+           <li><span class="icon"><i class="fa-solid fa-chart-simple"></i></span><span class="text">Charts</span></li>
+           <li><span class="icon"><i class="fa-solid fa-table"></i></span><span class="text">Table</span></li>
+           <li><span class="icon"><i class="fa-solid fa-file-invoice"></i></span><span class="text">Icons</span></li>
+           <li onclick="orderDashboard()" id="ordeli"><span class="icon"><i class="fa-solid fa-street-view"></i></span><span class="text">Orders</span></li>
+           <hr class="hr">
+               </ul>
+           <div class="first-haid" id="SECOND-HEAD">
+          <p>COMPONENT</p>
+           </div>
+           <ul class="first-ul">
+         <li><span class="icon"><i class="fa-solid fa-pen-fancy"></i></span><span class="text">Special Pages</span></li>
+         <li><span class="icon"><i class="fa-solid fa-poo-storm"></i></span><span class="text">Documentation</span></li>
+         <li><span class="icon"><i class="fa-solid fa-play"></i></span><span class="text">Multilevel</span></li>
+         <hr class="hr">
+          </ul>
+        </div>
+        <div class="right-main-con">
+             <div class="right-first-hedr">
+                  <div class="right-first-header-card1" id="rcard1">
+                      <div class="text-section">
+                          <h1>914,001</h1>
+                          <h3>Visits</h3>
+                      </div>
+                      <div class="icon-section">
+                        <i class="fa-solid fa-people-robbery"></i>
+                      </div>
+                  </div>
+                  <div class="right-first-header-card1" id="rcard2">
+                      <div class="text-section">
+                          <h1>46.41</h1>
+                          <h3>Bounce Rate</h3>
+                      </div>
+                      <div class="icon-section">
+                        <i class="fa-solid fa-people-robbery"></i>
+                      </div>
+                  </div>
+                  <div class="right-first-header-card1" id="rcard3">
+                      <div class="text-section">
+                          <h1>4,054,876</h1>
+                          <h3>Page Views</h3>
+                      </div>
+                      <div class="icon-section">
+                        <i class="fa-solid fa-people-robbery"></i>
+                      </div>
+                  </div>
+                  <div class="right-first-header-card1" id="rcard4">
+                      <div class="text-section">
+                          <h1>46,43</h1>
+                          <h3>Growth Rate</h3>
+                      </div>
+                      <div class="icon-section">
+                        <i class="fa-solid fa-people-robbery"></i>
+                      </div>
+                  </div>
+             </div>
+             <div class="right-section2">
+                 <div class="rs2-first-line">
+                    <h2 id="msg">User List</h2>
+                    <div class="butons">
+                      <button>Filter</button>
+                      <button>See All</button>
+                      <button id="ad">Add</button>
+                    </div>
+                  </div>
+                  <hr class="hr">
+                  <div class="rs2-second-line">
+                    <table id="table">
+                      <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="right-section3">
+                      <table id="Order-table">
+                           <tr>
+                            <th>Img</th>
+                             <th>Id</th>
+                             <th>Name</th>
+                             <th>Price</th>
+                             <th>Quantity</th>
+                             <th>Remove</th>
+                           </tr>
+                      </table>
+                  </div>    
+             </div>
+        </div>
+     </div>
+      
+   </div>
+
+    <script src="../app.js"></script>
+</body>
+</html>

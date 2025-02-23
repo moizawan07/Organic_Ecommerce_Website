@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce-Website</title>
+    <link rel="stylesheet" href="shop.css">
+    <script src="https://kit.fontawesome.com/7e4bb5f098.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="main-container">
+     
+         <!-------- Header section Start ---------->
+         <div class="header">
+
+          <!-- LOGO DIV  -->
+          <div class="logo">
+              <img src="../Images/logo.png" alt="">
+          </div>
+
+          <!-- LINKS DIV -->
+          <div class="navbar">
+              <ul>
+                 <li><a href='../index.html'>Home</a></li>
+                 <li><a href="#Section3">About</a></li>
+                 <li><a href="./Shop/shop.html">Shop</a></li>
+                 <li><a href="#">Contact</a></li>
+                 <li><a href="#">Feedback</a></li>
+              </ul>
+          </div>
+             
+          <!-- HAMS BURGER ICON DIV -->
+          <div class="nav-icon">
+              <i onclick="navOn()" class="fa-solid fa-list"></i>
+          </div>
+
+          <!-- OFFER MSG DIV -->
+          <div class="offerMsg">
+             <p>⚡ Order now and get it with in 20 mint</p>
+          </div>
+
+          <!-- ADD TO CARD PRODUCT ITEMS COUNT DIV -->
+          <div class="card-items-count">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <p id="item-counte">1</p>
+          </div>
+      
+          <!-- USER PROFILE IMG DIV -->
+          <div class="profile">
+            <img src="../Images/default-user-img.png" alt="">
+          </div>
+
+         </div>
+         <!-------- HEADER SECTION COMPLETE -------->
+
+
+
+         <!-- SLIDEBAR SECTION START -->
+         <div class="slider-container">
+
+          <!-- SLIDEBAR IMAGES DIV -->
+          <div class="slider">
+            <img src="../Images/silderimg1.jpg" alt="Image 1" class="slide">
+            <img src="../Images/silderimg2.jpg" alt="Image 2" class="slide">
+            <img src="../Images/silderimg3.jpg" alt="Image 3" class="slide">
+            <!-- Add more images as needed -->
+          </div>
+
+          <!-- SLIDEBAR BULLETS START -->
+          <div class="bullets">
+            <button class="bullet-btn" data-slide="0"></button>
+            <button class="bullet-btn" data-slide="1"></button>
+            <button class="bullet-btn" data-slide="2"></button>
+            <!-- Add more bullet buttons if you add more images -->
+          </div>
+
+         </div>
+         <!-- SLIDEBAR SECTION END -->
+
+      
+         <!-- SECTION 1 START -->
+         <div class="section1">
+
+             <!-- S1  TEXT DIV -->
+             <div class="s2fistbox">
+                 <h2>Categories</h2>
+                 <h1>Shop by Categories</h1>
+             </div>
+
+            <!-- S1 MULTIPLE DIV MAIN  DIV START -->
+            <div class="s2select-box-main">
+
+                <!-- FRUIT DIV  -->
+                <div class="s2selectbox-card1" id="fruits" onclick="ProducrtsSea(this)">
+                    <img src="../Images/s2selectimage1.png" alt="">
+                    <h2>Fruits</h2>
+                    <p>20 items</p>
+                </div>
+
+                <!-- VEGETABLE DIV  -->
+                <div class="s2selectbox-card1"  id="Vegetable"  onclick="ProducrtsSea(this)">
+                    <img src="../Images/s2selectimage2.jpeg" alt="">
+                    <h2>Vegetables</h2>
+                    <p>20 items</p>
+                </div> 
+
+                <!-- DRINKS DIV  -->
+                <div class="s2selectbox-card1"  id="Drinks" onclick="ProducrtsSea(this)">
+                    <img src="../Images/s2selectimage3.jpeg" alt="">
+                    <h2>Drinks</h2>
+                    <p>20 items</p>
+                </div>
+
+                <!-- FRESH NUTS DIV  -->
+                <div class="s2selectbox-card1"  id="Freshnuts" onclick="ProducrtsSea(this)">
+                    <img src="../Images/s2selectimage4.jpeg" alt="">
+                    <h2>Dry Fruits</h2>
+                    <p>20 items</p>
+                </div>
+
+                <!-- NOODLES DIV  -->
+                <div class="s2selectbox-card1"  id="Noodles"  onclick="ProducrtsSea(this)">
+                    <img style="width: 90px;" src="../Images/s2selectimage5.jpeg" alt="">
+                    <h2>Noodles</h2>
+                    <p>20 items</p>
+                </div> 
+
+                <!-- SNAKES DIV  -->
+                <div class="s2selectbox-card1"  id="Snaks"  onclick="ProducrtsSea(this)">
+                    <img style="width: 120px;" src="../Images/s2selectimage6.jpeg" alt="">
+                    <h2>Snakes</h2>
+                    <p>20 items</p>
+                </div>
+
+            </div>
+            <!-- S1 MULTIPLE DIV MAIN  DIV END -->
+
+         </div>
+         <!-- SECTION 1 END -->
+
+
+         <!-- FOOTER SECTION START -->
+         <div class="footer">
+            <!-- FOOTER FIRST ROW DIV  -->
+            <div class="first-row-icons">
+                <div class="ficon">
+                 <i class="fa-brands fa-facebook"></i>
+                </div>
+                <div class="ficon">
+                 <i class="fa-brands fa-instagram"></i>
+                </div>
+                <div class="ficon">
+                 <i class="fa-brands fa-twitter"></i>
+                </div>
+                <div class="ficon">
+                 <i class="fa-brands fa-google"></i>
+                </div>
+                <div class="ficon">
+                 <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+
+             <!-- FOOTER SECOND ROW DIV  -->
+            <div class="f-second-row">
+             <ul>
+                 <li><a href="../index.html">Home</a></li>
+                 <li><a href="#">About</a></li>
+                 <li><a href="./shop.html">Shop</a></li>
+                 <li><a href="#">Contact</a></li>
+                 <li><a href="#">Feedback</a></li>
+              </ul>
+            </div>
+
+            <!-- FOOTER THIRD ROW DIV  --> 
+            <div class="fthird-row">
+                 <p>Copyright © 2024 Designed buy <a href="https://github.com/moizawan07?tab=repositories" target="_blank" style="color: white;">Moiz Ahmed</a></p>
+            </div>
+
+         </div>
+         <!-- FOOTER SECTION END -->
+
+
+     <!-- JAVASCRIPT LINK  -->
+     <script src="../JavaScript/app.js"></script>
+</body>
+</html>

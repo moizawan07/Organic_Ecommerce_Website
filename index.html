@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce-Website</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/7e4bb5f098.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!---------  MAIN CONTAINER DIV START HERE ---------->
+    <div class="main-container">
+
+
+        <!-------- Header section Start ---------->
+        <div class="header">
+
+            <!-- LOGO DIV  -->
+            <div class="logo">
+                <img src="../Images/logo.png" alt="">
+            </div>
+
+            <!-- LINKS DIV -->
+            <div class="navbar">
+                <ul>
+                   <li><a href='./index.html'>Home</a></li>
+                   <li><a href="#Section3">About</a></li>
+                   <li><a href="./Shop/shop.html">Shop</a></li>
+                   <li><a href="#">Contact</a></li>
+                   <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+               
+            <!-- HAMS BURGER ICON DIV -->
+            <div class="nav-icon">
+                <i onclick="navOn()" class="fa-solid fa-list"></i>
+            </div>
+
+            <!-- OFFER MSG DIV -->
+            <div class="offerMsg">
+               <p>⚡ Order now and get it with in 20 mint</p>
+            </div>
+
+            <!-- ADD TO CARD PRODUCT ITEMS COUNT DIV -->
+            <div class="card-items-count">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <p id="item-counte">1</p>
+            </div>
+        
+            <!-- USER PROFILE IMG DIV -->
+            <div class="profile">
+              <img src="./Images/default-user-img.png" alt="">
+            </div>
+
+        </div>
+        <!-------- HEADER SECTION COMPLETE -------->
+
+
+
+
+          <!---------  HERO SECTION  START  ---------->
+          <div class="her-section-main">
+
+                  <!--  HERO LEFT MAIN DIV -->
+               <div class="hero-left-main">
+                  <h1>Make healthy <br> life with <span class="s" style="font-weight: bold; color: #255d02">Fresh</span><br>grocery</h1>
+                  <p>Get the best quality and most delicious grocery food in the world, you can get them all use our website</p>
+                  <button>Shop Now:</button>
+               </div>
+
+                  <!--  HERO RIGHT MAIN DIV -->
+               <div class="hero-right-main">
+                   <img src="../Images/hero-sec-Photoroom-removebg-preview.png" alt="">
+               </div>
+
+          </div>
+          <!---------  HERO  SECTION COMPLETE  ---------->
+
+
+
+          
+         <!---------  SECTION1 START  ---------->
+         <div class="secion1">
+
+              <!-- S1 FIRST DIV FOR MULTIPLE TEXT -->
+              <div class="fisrt-text-box">
+                <h1>How it Works?</h1>
+                <p>Organic agriculture, which is governed by strict government standards, requires that products bearing the organic label are produced without the use of toxic and persistent pesticides and synthetic nitrogen fertilizers, antibiotics, synthetic hormones, genetic engineering or other excluded practices, sewage sludge, or irradiation.</p>
+              </div>
+
+              <!-- S1 SECOND DIV FOR IMAGES AND TEXT  -->
+              <div class="s1-flex-box">
+                  <div class="s1-fbcard1">
+                      <img src="https://img.freepik.com/free-photo/top-view-bunch-fresh-food-donation-with-copy-space_23-2148733835.jpg?ga=GA1.1.947001471.1717226881&semt=ais_hybrid   " alt="">
+                  </div>
+                  <div class="s1-fbcard1" id="white">
+                    <div class="textss">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR251FMvBC41S1zyxfUfjC3VHQW6DvVNj1gTQ&s" alt="">
+                        <h2>Organic farming</h2>
+                        <p>Organic farming practices reduce pollution, conserve water, reduce soil erosion, increase soil fertility, and use less energy, is also better for birds</p>
+                    </div>
+                </div>
+                <div class="s1-fbcard1">
+                    <img src="https://img.freepik.com/premium-photo/food-table-with-delivery-app-app_665346-104695.jpg?ga=GA1.1.947001471.1717226881&semt=ais_hybrid" alt="">
+                </div>
+                <div class="s1-fbcard1" id="white">
+                    <div class="textss">
+                      <img class="cow" src="data:image/png;base64,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" alt="">
+                        <h2>Animal husbandry</h2>
+                        <p>The animal production system, may be broadly classified as traditional, conventional and organic with their distinct characteristics.</p>
+                    </div>
+                </div>
+                <div class="s1-fbcard1">
+                    <img src="https://media.istockphoto.com/id/995518546/photo/assortment-of-colorful-ripe-tropical-fruits-top-view.jpg?s=1024x1024&w=is&k=20&c=FcZ1Fm8fs5GQBUL5k-W7icfKIBzqtEjBxS9Mf18rEfw=" alt="">
+                </div>
+                <div class="s1-fbcard1" id="white">
+                    <div class="textss">
+                      <img class="cow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsGjiNi5gnldPfgdM5x1cn466-w_JU0OsIbw&s" alt="">
+                        <h2>Arable Farming</h2>
+                        <p>Organic foods often have more beneficial nutrients, such as antioxidants, than their conventionally-grown counterparts and people with allergies to foods</p>
+                    </div>
+                </div>
+
+              </div>
+
+         </div>
+         <!---------  SECTION1 END  ---------->
+
+
+
+
+         <!---------  SECTION2 START  ---------->
+         <div class="section2">
+
+              <!-- S2 LEFT MAIN DIV -->
+              <div class="s2left">
+                <img src="../Images/left-bar-img.png" alt="">
+              </div>
+
+              <!---------  S2 RIGHT MAIN DIV  ---------->
+              <div class="s2right">
+                <h2>Organic Product</h2>
+                <h1>Our Promise</h1>
+                <p>We bring the season’s best mix of organic produce and hand-crafted farm products conveniently to your door by growing and partnering with local farms and artisans in your area.</p>
+                <button>Order Now:</button>
+              </div>
+
+         </div>
+         <!---------  SECTION2 END  ---------->
+
+
+
+
+         <!---------  SECTION3  PART 1 START  ---------->
+         <div class="section3" id="Section3">
+
+              <!--S3 FIRST DIV TEXT-BOX  -->
+             <div class="section3-text-box">
+                <h1>About Our items</h1>
+                <p>Today, at our second-generation family farm, we keep with our parents’ vision by practicing healthy crop rotation, encouraging a diverse ecosystem around the fields, efficiently using local water sources and carefully selecting produce varieties that grow well and taste great.
+                </p>
+             </div>
+
+         </div>
+         <!---------  SECTION3 PART 1 END  ---------->
+
+
+
+         <!---------  SECTION3 PART2 CONTINUE WITH CARD START   ---------->
+         <div class="s3card-flex-main">
+
+             <!-- S3 CARD 1 MAIN DIV -->
+             <div class="s3card1">
+                  <div class="s3card-text">
+                     <h2>Vegetables</h2>
+                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+                  </div>
+                  <div class="s3card-img">
+                     <img src="../Images/s3card1.png" alt="">
+                  </div>
+             </div>
+
+             <!-- S3 CARD 2 MAIN DIV -->
+             <div class="s3card1">
+             <div class="s3card-text">
+                <h2>Vegetables</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+             </div>
+             <div class="s3card-img">
+                <img src="../Images/s3card2.png" alt="">
+             </div>
+             </div>
+
+             <!-- S3 CARD 3 MAIN DIV -->
+             <div class="s3card1">
+         <div class="s3card-text">
+            <h2>Vegetables</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+         </div>
+         <div class="s3card-img">
+            <img src="../Images/s3card3.png" alt="">
+         </div>
+             </div>
+
+             <!-- S3 CARD 4 MAIN DIV -->
+             <div class="s3card1">
+         <div class="s3card-text">
+            <h2>Vegetables</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+         </div>
+         <div class="s3card-img">
+            <img src="../Images/s3card4.png" alt="">
+         </div>
+             </div>
+
+         </div> 
+         <!---------  SECTION3 PART2 CONTINUE WITH CARD END  ---------->
+
+
+         <!---------  SECTION4 START  ---------->
+         <div class="section4">
+              
+             <!-- S4 LEFT MAIN DIV -->
+             <div class="s4left">
+                 <h2>Organic Farm</h2>
+                 <h1>Of Organic Food</h1>
+                 <p>Organic principles and regulations are also designed to ensure that animals are treated humanely, or, to be brutally honest, as humanely as possible..</p>
+                 <p>There are strict rules on the way in which animals are housed, guaranteeing a degree of comfort for the animals. But when it comes to vegetables, the situation is quite different.</p>
+                 <button>Order Now:</button>
+             </div>
+
+             <!-- S4 RIGHT MAIN DIV -->
+             <div class="s4right">
+               <img src="../Images/s4right.png" alt="">
+             </div>
+
+         </div>  
+        <!---------  SECTION4 END  ---------->
+
+
+          <!---------  FOOTER SECTION START  ---------->
+          <div class="footer">
+
+               <!-- FOOTER FIRST ROW DIV  -->
+               <div class="first-row-icons">
+                   <div class="ficon">
+                    <i class="fa-brands fa-facebook"></i>
+                   </div>
+                   <div class="ficon">
+                    <i class="fa-brands fa-instagram"></i>
+                   </div>
+                   <div class="ficon">
+                    <i class="fa-brands fa-twitter"></i>
+                   </div>
+                   <div class="ficon">
+                    <i class="fa-brands fa-google"></i>
+                   </div>
+                   <div class="ficon">
+                    <i class="fa-brands fa-youtube"></i>
+                   </div>
+               </div>
+
+                <!-- FOOTER SECOND ROW DIV  -->
+               <div class="f-second-row">
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="#Section3">About</a></li>
+                    <li><a href="./Shop/shop.html">Shop</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Feedback</a></li>
+                 </ul>
+               </div>
+
+               <!-- FOOTER THIRD ROW DIV  --> 
+               <div class="fthird-row">
+                    <p>Copyright © 2024 Designed buy <a href="https://github.com/moizawan07?tab=repositories" target="_blank" style="color: white;">Moiz Ahmed</a></p>
+               </div>
+
+          </div>
+          <!---------  FOOTER SECTION END HERE  ---------->
+
+    </div>
+  <!---------  MAIN CONTAINER DIV END HERE  ---------->  
+
+
+
+  <!----  JAVASCRIPT LINK  --->
+  
+  <script src="./JavaScript/app.js"></script>  
+</body>
+</html>
