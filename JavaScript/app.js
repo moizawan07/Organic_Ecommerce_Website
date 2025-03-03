@@ -1,3 +1,69 @@
+// Firebase Service Import for the firebase.js
+import { db , addDoc, collection, getDocs } from "./firebase.js";
+// FirStore Data Set / Get Functions Import
+// import { addDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+console.log(db);
+
+
+let products = [
+  {
+    categoryName : 'Fruits',
+    items : [
+      {
+        name : 'Apple',
+        currentPrice : 500,
+        oldPrice : 650,
+        off : '20%',
+        imgSrc : '../Images/s2fruitscard1.png'
+      },
+      {
+        name : 'Litchi',
+        currentPrice : 1500,
+        oldPrice : 1850,
+        off : '30%',
+        imgSrc : '../Images/s2fruitscard2.png'
+      },
+      {
+        name : 'Water Melon',
+        currentPrice : 300,
+        oldPrice : 500,
+        off : '25%',
+        imgSrc : '../Images/s2fruitscard3.png'
+      }
+    ],
+    categoryPic : '../Images/s2selectimage1.png'
+  },
+]
+
+
+// async function addDataInFB  (){
+
+//   try {
+//     let setData = await addDoc(collection(db, 'Products'), {name : 'Moiz'})
+//     console.log(setData);
+    
+//   } 
+//   catch (error) {
+//     console.log(error);
+    
+//   }
+// }
+
+
+
+addDataInFB()
+
+
+
+
+
+
+
+
+
+
 
 // NAVBAR ON / OFF  FUNCTION
 function navOn() {
@@ -55,5 +121,3 @@ if (window.location.href.indexOf("shop") != -1) {
   showSlide(currentSlide);
 }
 // SLIDEBARCODE END
-
-
