@@ -152,8 +152,12 @@
 .section1{
     width: 100%;
     padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.s2fistbox h2{
+.section1 h2{
     text-align: center;
     letter-spacing: 1px;
     color: #2d7500;
@@ -173,21 +177,14 @@
         scale: 1;
     }
 }
-.s2fistbox h1{
-    font-size: 45px;
-    text-align: center;
-    animation: scroll linear;
-    animation-timeline: view();
-    animation-range: 0 50%;
-}
-.s2select-box-main{
-    margin-top: 50px;
+
+.section2Categoriesmain{
     width: 100%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     gap: 25px;
-    cursor: pointer;
+    align-items: center;
+    flex-wrap: wrap;
 }
 .s2selectbox-card1{
     width: 200px;
@@ -208,11 +205,11 @@
    color: #2d7500;
     font-weight: bold;
 }
-#fruits{
+#Fruits{
     background-color: #FDE9E0;
     box-shadow: 0px 0px 5px #e94c03;
 }
-#Vegetable{
+#Vegetables{
     background-color: #EEEEFA;
     box-shadow: 0px 0px 5px #4c4cfb;
 
@@ -222,7 +219,7 @@
     box-shadow: 0px 0px 5px #2b7b00;
 
 }
-#Freshnuts{
+#DryFruits{
     background-color: #FCEAEA;
     box-shadow: 0px 0px 5px #ff3131;
 
@@ -232,7 +229,7 @@
     box-shadow: 0px 0px 5px #aca601;
 
 }
-#Snaks{
+#Snakes{
     background-color: rgb(244, 230, 247);
     box-shadow: 0px 0px 5px rgb(133, 0, 163);
 
@@ -242,17 +239,96 @@
     transform: scale(1.1);
     transition: 0.5s ease-in;
 }
-/* Section 1 End */
-/* Section 2 Start */
-/* Section 2 End */
-/* Add to Card  Start*/
-/* .top{
+
+
+
+/* SECTION 3 PRODUCTS CARD START */
+.section3ProductsMain{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 50px;
+    gap: 30px 10px;
+}
+
+.S2Card{
+    padding-top: 20px;
+    width: 250px;
+    height: 300px;
+    padding-left: 20px;
+    padding-bottom: 30px;
     position: relative;
-    bottom: 15px;
-} */
+    border-radius: 5px;
+    animation: scroll linear;
+    animation-timeline: view();
+    animation-range: 0 50%;
+    &:hover{
+        box-shadow: 0px 0px 5px #fd5f09;
+    }
+}
+.S2Card img{
+    width: 70%;
+    height: 150px;
+    position: relative;
+    left: 5%;
+    transition: 0.5s ease-in-out;
+}
+.S2Card h3{
+    margin-top: 40px;
+    font-weight: 600;
+}
+.S2Card p{
+    margin-top: 10px;
+    font-size: 14px;
+    margin-left: 2px;
+    font-weight: 400;
+}
+.S2Card s{
+    /* position: relative; */
+    color: rgb(84, 83, 83);
+    font-weight: 300;
+    margin-left: 5px;
+    text-decoration: line-through;
+}
+.S2Card .off{
+    width: 70px;
+    text-align: center;
+    font-size: 12px;
+    background-color: red;
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    font-weight: bold;
+    padding-block: 2px;
+    border-radius: 5px;
+}
 
+.S2Card .S2CardIcon{
+    position: absolute;
+    bottom: 25px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    align-content: center;
+    border-radius: 5px;
+}
 
-/* Add to Card  End*/
+.S2Card .S2CardDescr{
+    display: none;
+    margin-top: 5px;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: red;
+}
 
 /* Footer start */
 .footer{
@@ -340,6 +416,8 @@
 
 
 
+
+/* RESPONSIVE START */
 @media(max-width:1070px){
     .logo{
         right: 20px;

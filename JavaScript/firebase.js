@@ -2,7 +2,7 @@
 // import { getAuth } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js'
 // import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js'
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, collection, getDocs , addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc , setDoc , collection } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 
   // Your web app's Firebase configuration
@@ -23,4 +23,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
 // Export For The Other Files
-export { db , collection ,getDocs, addDoc}
+export { db , doc ,getDoc, setDoc, collection}

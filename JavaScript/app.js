@@ -1,63 +1,95 @@
 // Firebase Service Import for the firebase.js
-import { db , addDoc, collection, getDocs } from "./firebase.js";
-// FirStore Data Set / Get Functions Import
-// import { addDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db , setDoc, doc, getDoc, collection } from "./firebase.js";
+// This organicStoreItems Is a Object in this all Products Information Stored.
+import organicStoreItems from './productsStores.js'
+
+console.log(organicStoreItems);
 
 
-console.log(db);
+// Set Products Data in Database
+ function addProductsInFB  (){
+     setDoc(doc(db, 'OrganicProducts/allProducts'), organicStoreItems)
+  } 
+ 
 
-
-let products = [
-  {
-    categoryName : 'Fruits',
-    items : [
-      {
-        name : 'Apple',
-        currentPrice : 500,
-        oldPrice : 650,
-        off : '20%',
-        imgSrc : '../Images/s2fruitscard1.png'
-      },
-      {
-        name : 'Litchi',
-        currentPrice : 1500,
-        oldPrice : 1850,
-        off : '30%',
-        imgSrc : '../Images/s2fruitscard2.png'
-      },
-      {
-        name : 'Water Melon',
-        currentPrice : 300,
-        oldPrice : 500,
-        off : '25%',
-        imgSrc : '../Images/s2fruitscard3.png'
-      }
-    ],
-    categoryPic : '../Images/s2selectimage1.png'
-  },
-]
-
-
-// async function addDataInFB  (){
-
-//   try {
-//     let setData = await addDoc(collection(db, 'Products'), {name : 'Moiz'})
-//     console.log(setData);
-    
-//   } 
-//   catch (error) {
-//     console.log(error);
-    
-//   }
-// }
-
-
-
-addDataInFB()
+async function getProductsInFb () {
+  let allProductsStore;
+     try {
+      let snapC = await getDoc(doc(db,'OrganicProducts/allProducts'))
+        allProductsStore = snapC.data()}
+     catch (error) {
+      console.error(error)
+    }
+// RETURN THE allProductsStore VARIABLE in this var stored all Categories and Products ARRAY
+  return allProductsStore;
+}
 
 
 
 
+function categoryDivcPrint () {
+  let mainDiv = document.querySelector('.section2Categoriesmain')
+  let snapC = getProductsInFb()
+
+  .then(data => {
+    //Print Category div Not Products
+    data.allProductsArr.forEach((eachItem) => {
+      let {categoryName, items, categoryPic} = eachItem    // Desturing    
+
+      // Print it Start
+      mainDiv.innerHTML += `
+         <div class="s2selectbox-card1" id=${categoryName} onclick="productsPrint('${categoryName}')">
+             <img src=${categoryPic} alt="">
+             <h2>${categoryName}</h2>
+             <p>${items.length} items</p>
+         </div>`
+})})
+  .catch(err => console.error(err))
+}
+
+//  This Function Prints Categories ka jo  Products Ha Woh
+window.productsPrint = function (productCate){
+  console.log(productCate)
+  let mainDiv = document.querySelector('.section3ProductsMain')
+      mainDiv.innerHTML = ''   // Old Values Empty
+      
+  let snapC = getProductsInFb()
+   .then((data) => {
+   let allproducts = data.allProductsArr
+
+       allproducts.forEach(i => {
+         if(i.categoryName === productCate){
+
+             i.items.forEach(e => {
+               mainDiv.innerHTML += `
+                 <div class="S2Card">
+                     <img src=${e.imgSrc}  alt="products Image">
+                     <h3>${e.name}</h3>
+                     <p>Rs.${e.currentPrice}<s>${e.oldPrice}</s></p>
+                     <p class="S2CardDescr">An apple contains essential nutrients like vitamins, minerals, fiber, and antioxidants, which are beneficial for overall health. <b onclick="viewMore(this)">View More</b></p>
+                      <div class="off">${e.off} OFF</div>
+                     <div onclick="productSelect(this)" class="S2CardIcon">
+                       <i class="fa-solid fa-plus"></i>
+                     </div>
+                 </div> 
+               `
+             })
+         }
+          
+     })
+      
+   })
+   .catch(err => console.error(err)) 
+}
+
+
+// This condition is when true jb page shop ka hu ga
+if(window.location.href.includes('shop.html')){
+  addProductsInFB()
+  getProductsInFb()
+  categoryDivcPrint()
+  productsPrint('Fruits')
+}
 
 
 
@@ -66,7 +98,7 @@ addDataInFB()
 
 
 // NAVBAR ON / OFF  FUNCTION
-function navOn() {
+window.navOn = function () {
   let ul =         document.querySelector(".navbar");          // GET KR RHA JIS JIS PR CLASS ADD KRNI
   let offerMsg =   document.querySelector(".offerMsg");
   let counterDiv = document.querySelector(".card-items-count");
@@ -75,8 +107,9 @@ function navOn() {
     offerMsg.classList.toggle('Show')
     counterDiv.classList.toggle('Show')
     profileDiv.classList.toggle('Show')
-  
 }
+// document.getElementById('navOn').addEventListener('click', navOn)
+
 
 // SLIDEBAR CODE START
 //  shop ki file ma gya to he slidebar chale ga slidebar sirf shop wali file ma ha
