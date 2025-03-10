@@ -49,14 +49,14 @@ function categoryDivcPrint () {
 
 //  This Function Prints Categories ka jo  Products Ha Woh
 window.productsPrint = function (productCate){
-  console.log(productCate)
   let mainDiv = document.querySelector('.section3ProductsMain')
-      mainDiv.innerHTML = ''   // Old Values Empty
-      
+  mainDiv.innerHTML = '<div class="loader"></div>'   // Old Values Empty
+
   let snapC = getProductsInFb()
    .then((data) => {
    let allproducts = data.allProductsArr
-
+       mainDiv.innerHTML = ''   // Old Values Empty
+      
        allproducts.forEach(i => {
          if(i.categoryName === productCate){
 
@@ -66,7 +66,7 @@ window.productsPrint = function (productCate){
                      <img src=${e.imgSrc}  alt="products Image">
                      <h3>${e.name}</h3>
                      <p>Rs.${e.currentPrice}<s>${e.oldPrice}</s></p>
-                     <p class="S2CardDescr">An apple contains essential nutrients like vitamins, minerals, fiber, and antioxidants, which are beneficial for overall health. <b onclick="viewMore(this)">View More</b></p>
+                     <p class="S2CardDescr">An ${e.name} contains essential nutrients like vitamins, minerals, fiber, and antioxidants, hes very which are the most beneficial for overall the body & health.</p>
                       <div class="off">${e.off} OFF</div>
                      <div onclick="productSelect(this)" class="S2CardIcon">
                        <i class="fa-solid fa-plus"></i>
@@ -79,7 +79,34 @@ window.productsPrint = function (productCate){
      })
       
    })
-   .catch(err => console.error(err)) 
+   .catch(err => console.error(err))
+       
+}
+
+window.productSelect = function (e){
+  let img = document.getElementById('product-img')
+  let name = document.getElementById('proname')
+  let price = document.getElementById('ProductPrice')
+  let uPrice = document.getElementById('updateProductPrice')
+  let description = document.getElementById('Productdetail')
+  let modaalDiv = document.querySelector('.section4ModaalMain')
+      modaalDiv.style.display = 'block'
+
+  let selectProductInfo = {
+    imgSrc : e.parentNode.childNodes[1].src,
+    name : e.parentNode.childNodes[3].innerText,
+    price : e.parentNode.childNodes[5].childNodes[0].nodeValue,
+    des : e.parentNode.childNodes[7].innerText
+  }
+  //   User Product  values set Them in Modal Div
+     img.src = selectProductInfo.imgSrc;
+     name.innerHTML = selectProductInfo.name;
+     price.innerHTML = selectProductInfo.price.slice(3)
+     description.innerHTML = selectProductInfo.des.slice(0,90) + "<b onclick='productViewMore()'> View More </b>"
+   
+     console.log(e.parentNode.childNodes[7].innerText);
+     
+  
 }
 
 
@@ -92,7 +119,26 @@ if(window.location.href.includes('shop.html')){
 }
 
 
+window.productViewMore = function (){
+   let productDesShowDiv = document.querySelector('#Productdetail')
+   let fullDesc = productDesShowDiv.innerHTML.slice(0,90) + `hes very which are the most beneficial for overall the body & health. <b onclick='productViewLess(this)'> View less </b>`;
+   
+  console.log(fullDesc);
+  
+       productDesShowDiv.innerHTML = fullDesc
+}
 
+window.productViewLess = function (e){
+  let productDesShowDiv = document.querySelector('#Productdetail')
+  let halfDesc = e.parentNode.innerHTML;
+    halfDesc = halfDesc.slice(0,90);
+      
+ 
+      productDesShowDiv.innerHTML = halfDesc + " <b onclick='productViewMore()'> View More </b>"
+
+      // console.log(productFullDescr);
+      
+}
 
 
 

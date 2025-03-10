@@ -185,6 +185,7 @@
     gap: 25px;
     align-items: center;
     flex-wrap: wrap;
+    margin-top: 50px;
 }
 .s2selectbox-card1{
     width: 200px;
@@ -194,6 +195,7 @@
     animation: scroll linear;
     animation-timeline: view();
     animation-range: 0 50%;
+    cursor: pointer;
     /* border: 1px solid black; */
 }
 .s2selectbox-card1 img{
@@ -244,14 +246,14 @@
 
 /* SECTION 3 PRODUCTS CARD START */
 .section3ProductsMain{
-    margin-top: 30px;
+    margin-top: 100px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding-bottom: 50px;
-    gap: 30px 10px;
+    gap: 30px 15px;
 }
 
 .S2Card{
@@ -329,6 +331,190 @@
     margin-right: 5px;
     background-color: red;
 }
+
+/* Loader animation */
+.loader{
+    border: 6px solid #eeebeb;
+    border-top: 6px solid #fb6622;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-top: 150px;
+  }
+  
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+/* SECTION PRODUCT MODAAL START  */
+.section4ModaalMain{
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    min-height: 95vh;
+    height: 95vh;
+    background-color: #b8ecb3;
+    padding-bottom: 50px;
+    box-shadow: 0px 0px 3px black;
+    border-radius: 5px;
+    transition: 1s ease-in-out;
+}
+
+.close-icon{
+    font-size: 25px;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+}
+.atcimg-show-user-con{
+    width: 100%;
+    height: 230px;
+    background-color: #ecf3f9;
+    background-color: #e7f4e6;
+    text-align: center;
+}
+.atcimg-show-user-con img{
+     width: 65%;
+     height: 100%;
+}
+.atc-text1 h3{
+    font-size: 22px;
+    margin-top: 5px;
+    margin-left: 15px;
+   font-weight: 650;
+   color: rgb(32, 32, 32);
+}
+.stars{
+    margin-top: 5px;
+    padding-left: 15px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+#proprice p{
+    margin-left: 17px; 
+    margin-top: 8px;
+   font-size: 17px;
+   font-family: monospace; 
+     font-weight: 400;
+}
+#plus-minus{
+   position: absolute;
+   top: 333px;
+   right: 20px;
+}
+#plus-minus button{
+   width: 38px;
+   height: 38px;
+   border-radius: 5px;
+   background-color: transparent;
+   border: 1px solid rgb(55, 54, 54);
+    font-size: 25px;
+    font-weight: 500;
+    margin-left: 37px;
+}
+#proqunanumber{
+    position: absolute;
+    top: 335px;
+    right: 74px;
+    font-size: 22px;
+    font-weight: bolder;
+}
+.opacity{
+    /* opacity: 0; */
+    display: none;
+}
+/* .top{
+    position: relative;
+    bottom: 15px;
+} */
+#delevery-time{
+    margin-top: 15px;
+    display: flex;
+    padding-left: 12px;
+}
+
+#products-details p{
+    font-size: 15px;
+}
+.add-tocard-con img {
+    mix-blend-mode: multiply;
+}
+#Productdetailsfull{
+    display: none;
+}
+.clock{
+    width: 40px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    height: 40px;
+    margin-top: 2px;
+    border: 1px solid black;
+}
+.clock i{
+    margin-top: 3px;
+    font-size: 20px;
+}
+.text{
+    margin-left: 10px;
+}
+.text h3{
+    font-weight: bold;
+    font-size: 19px;
+}
+.text p{
+   margin-left: 5px;
+   font-size: 14px;
+   margin-bottom: 5px;
+}
+#products-details{
+    margin-top: 25px;
+    padding-left: 15px;
+}
+#products-details h3{
+    font-weight:600;
+}
+#products-details button{
+    border: none;
+    background-color: transparent;
+   font-weight: 700;
+   margin-left: 5px;
+   font-size: 15px;
+}
+.harfdescription,.fulldescription{
+    display: none;
+    margin-top: 5px;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+b{
+    font-weight: bold;
+    cursor: pointer;
+    transition: 1s ease-in;
+}
+#addto-card-button{
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#addto-card-button button{
+    width: 100%;
+    background-color: black;
+    color: white;
+    border: none;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* SECTION PRODUCT MODAAL END   */
 
 /* Footer start */
 .footer{
