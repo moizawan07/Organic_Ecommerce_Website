@@ -83,6 +83,17 @@ window.productsPrint = function (productCate){
        
 }
 
+
+
+// This condition is when true jb page shop ka hu ga
+if(window.location.href.includes('Shop')){
+  addProductsInFB()
+  getProductsInFb()
+  categoryDivcPrint()
+  productsPrint('Fruits')
+}
+
+// Product Select Function on + Icon Div
 window.productSelect = function (e){
   let img = document.getElementById('product-img')
   let name = document.getElementById('proname')
@@ -90,7 +101,10 @@ window.productSelect = function (e){
   let uPrice = document.getElementById('updateProductPrice')
   let description = document.getElementById('Productdetail')
   let modaalDiv = document.querySelector('.section4ModaalMain')
+  let background = document.querySelector('.background-blur')
+
       modaalDiv.style.display = 'block'
+      background.style.display = 'block'
 
   let selectProductInfo = {
     imgSrc : e.parentNode.childNodes[1].src,
@@ -109,25 +123,33 @@ window.productSelect = function (e){
   
 }
 
+// Product Select Modaal Div Close  on X Icon Div
+window.productSelectModaalOff = function (){
+  let modaalMainDiv = document.querySelector('.section4ModaalMain')
+  let oprice = document.getElementById('ProductPrice')
+  let uPrice = document.getElementById('updateProductPrice')
+  let counterDiv = document.querySelector('#proqunanumber')
+  let background = document.querySelector('.background-blur')
 
-// This condition is when true jb page shop ka hu ga
-if(window.location.href.includes('shop.html')){
-  addProductsInFB()
-  getProductsInFb()
-  categoryDivcPrint()
-  productsPrint('Fruits')
+      modaalMainDiv.style.display = 'none'
+      oprice.style.display = 'block'
+      uPrice.innerText = ''
+      counterDiv.innerText = 1
+      background.style.display = 'none'
+
 }
 
-
+// Product Select Description View More Function
 window.productViewMore = function (){
    let productDesShowDiv = document.querySelector('#Productdetail')
    let fullDesc = productDesShowDiv.innerHTML.slice(0,90) + `hes very which are the most beneficial for overall the body & health. <b onclick='productViewLess(this)'> View less </b>`;
    
-  console.log(fullDesc);
+  // console.log(fullDesc);
   
        productDesShowDiv.innerHTML = fullDesc
 }
 
+// Product Select Description View Less Function
 window.productViewLess = function (e){
   let productDesShowDiv = document.querySelector('#Productdetail')
   let halfDesc = e.parentNode.innerHTML;
@@ -140,7 +162,38 @@ window.productViewLess = function (e){
       
 }
 
+// Product Select Quantity Increment +
+window.pSQuantityIncre = function(){
+  let oprice = document.getElementById('ProductPrice')
+  let opriceConvertToNum = Number(oprice.innerText)
+  let uPrice = document.getElementById('updateProductPrice')
+  let counterDiv = document.querySelector('#proqunanumber')
+  let converToNum =    parseInt(counterDiv.innerText)
 
+    if(counterDiv.innerText < 10){
+      counterDiv.innerText = converToNum + 1   // Plus number
+      oprice.style.display = 'none' // Old Price None
+
+       // Multiply Update price Number
+      uPrice.innerText = counterDiv.innerText * opriceConvertToNum
+      
+      
+    }
+}
+
+window.pSQuantityDecre = function(){
+  let counterDiv = document.querySelector('#proqunanumber')
+  let oprice = document.getElementById('ProductPrice')
+  let uPrice = document.getElementById('updateProductPrice')
+
+   if(counterDiv.innerText > 1){
+      counterDiv.innerText = --counterDiv.innerText // Minus number
+
+      // Minus Update price 
+      uPrice.innerText = uPrice.innerText - oprice.innerText
+   }
+  
+}
 
 
 // NAVBAR ON / OFF  FUNCTION
@@ -154,12 +207,11 @@ window.navOn = function () {
     counterDiv.classList.toggle('Show')
     profileDiv.classList.toggle('Show')
 }
-// document.getElementById('navOn').addEventListener('click', navOn)
 
 
 // SLIDEBAR CODE START
 //  shop ki file ma gya to he slidebar chale ga slidebar sirf shop wali file ma ha
-if (window.location.href.indexOf("shop") != -1) {
+if (window.location.href.includes("Shop")){
   let currentSlide = 0;
   const slides = document.querySelectorAll(".slide");
   const bullets = document.querySelectorAll(".bullet-btn");

@@ -13,6 +13,17 @@
 .main-container{
     width: 100%;
 }
+/* Background forkes */
+.background-blur{
+    width: 100%;
+    display: none;
+    height: 300vh;
+    background: rgba(0, 0, 0, 0.7);
+    top: 0;
+    position: absolute;
+    z-index: 9999999;
+    overflow: hidden;
+}
 /* header section Start  */
 .header{
     width: 100%;
@@ -351,14 +362,14 @@
 .section4ModaalMain{
     display: none;
     position: fixed;
-    z-index: 99999;
+    z-index: 99999999;
     top: 20px;
     right: 20px;
     width: 350px;
-    min-height: 95vh;
-    height: 95vh;
+    min-height: 75vh;
+    height: auto;
     background-color: #b8ecb3;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     box-shadow: 0px 0px 3px black;
     border-radius: 5px;
     transition: 1s ease-in-out;
@@ -381,11 +392,11 @@
      width: 65%;
      height: 100%;
 }
-.atc-text1 h3{
+.atc-text1 {
     font-size: 22px;
     margin-top: 5px;
     margin-left: 15px;
-   font-weight: 650;
+   font-weight: 450;
    color: rgb(32, 32, 32);
 }
 .stars{
@@ -435,6 +446,11 @@
     margin-top: 15px;
     display: flex;
     padding-left: 12px;
+}
+#proname{
+    margin-left: 17.5px;
+    margin-top: 10px;
+    text-transform: capitalize;
 }
 
 #products-details p{
@@ -499,7 +515,7 @@ b{
     transition: 1s ease-in;
 }
 #addto-card-button{
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -512,6 +528,10 @@ b{
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
+    word-spacing: 1px;
+    font-variant: small-caps;
+    font-weight: 200;
+    text-transform: capitalize;
 }
 
 /* SECTION PRODUCT MODAAL END   */
@@ -730,5 +750,20 @@ b{
       .slider-container{
         height: auto;
       }
+      .offerMsg p{
+        font-size: 18px;
+        left: 0px;
+      }
+
+      .background-blur{
+       height: 500vh;
+    }
+
+    .section4ModaalMain {
+        top: 15%;
+        /* right: 20px; */
+        width: 90%;
+        min-height: 55vh;
+    }
     
 }

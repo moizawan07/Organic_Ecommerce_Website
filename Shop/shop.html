@@ -10,6 +10,9 @@
 </head>
 <body>
     <div class="main-container">
+
+      <!-- BAckground Foked -->
+       <div class="background-blur"></div>
      
          <!-------- Header section Start ---------->
          <div class="header">
@@ -98,7 +101,7 @@
          <!-- SECTION 4 START HERE PRODUCTS MODAAL DIV -->
          <div class="section4ModaalMain">
           <div class="close-icon">
-            <i onclick="adtocardclose(this)" class="fa-solid fa-xmark"></i>    <!-- onclick="adtocardclose(this)" -->
+            <i onclick="productSelectModaalOff()" class="fa-solid fa-xmark"></i>    <!-- onclick="adtocardclose(this)" -->
           </div>
         <div class="product-card">
             <div class="atcimg-show-user-con" id="img-container">
@@ -113,8 +116,8 @@
               <p id="updateProductPrice"></p>
             </div>
             <div class="plus-minus" id="plus-minus">
-              <button id="Plusbtn" onclick="Minus(this)">-</button>
-              <button id="Minus-btn" onclick="Plus(this)">+</button>
+              <button id="Plusbtn" onclick="pSQuantityDecre()">-</button>
+              <button id="Minus-btn" onclick="pSQuantityIncre()">+</button>
             </div>
             <div id="proqunanumber">1</div>
             <div id="delevery-time">
