@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce-Website</title>
+    <title>E-Commerce Login</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="container">
         <div class="first-heading">
-            <h1>Welcome Back!</h1>
+            <h1>Login</h1>
             <p>Sign in to your account</p>
         </div>
         <div class="second-inputs">
-            <input type="email" placeholder="Email" id="email2">
-            <input type="password" placeholder="Password" id="password2">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email2" required>
+                <label>Email</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password2" required>
+                <label>Password</label>
+            </div>
         </div>
         <div class="third-butons">
             <button onclick="logIn()">Login</button>
-            <p>Dont Have an acoount? <a href="../index.html">Sign Up</a></p>
+            <p>Don't have an account? <a href="../SignUp/signup.html">Sign Up</a></p>
         </div>
-</div>
-
-<script src="../app.js"></script>
+    </div>
+    <script src="../app.js"></script>
 </body>
 </html>

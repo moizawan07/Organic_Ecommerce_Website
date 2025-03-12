@@ -1,9 +1,121 @@
-// Firebase Service Import for the firebase.js
-import { db , setDoc, doc, getDoc, collection } from "./firebase.js";
+// Firebase Services Import for the firebase.js
+import { db , doc ,getDoc, setDoc, collection,         
+  auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
+} from './firebase.js'
+
 // This organicStoreItems Is a Object in this all Products Information Stored.
 import organicStoreItems from './productsStores.js'
 
-console.log(organicStoreItems);
+window.signUp = function(){
+ let userValue = {
+  name : document.querySelector('#Name').value.toLowerCase(),
+  email : document.querySelector('#Email').value.toLowerCase(),
+  phoneNum : document.querySelector('#phonenumber').value,
+  pass : document.querySelector('#Password').value
+ }
+ let allFieldsCorrect = false
+ let nameRegex = /^[A-Za-z]{4,}$/  
+ let emailRegex = /^[a-zA-Z0-9._%+-]{4,}@(gmail\.com|yahoo\.com|outlook\.com)$/;  // Email Regex Code
+ let phoneRegex = /^\d{11}$/;
+ let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6}$/; 
+
+
+ if(userValue.name && userValue.email && userValue.phoneNum && userValue.pass){
+     if(nameRegex.test(userValue.name)){
+           if(emailRegex.test(userValue.email)){
+              if(phoneRegex.test(userValue.phoneNum)){
+                 if(passwordRegex.test(userValue.pass)){
+                  allFieldsCorrect = true
+                 }
+                 else{
+                  alert('Pass Must than a 6 chracter & contain at least one letter & one number')
+                 }
+              }
+              else{
+                alert('Invalid Phone Number')
+               }
+           }
+           else{
+            alert('Invalid Email')
+           }
+     }
+     else{
+      alert('Name must than 4 chracter')
+     }
+ }
+ else{
+  alert('All feilds complsary')
+ }
+
+//  If All Fields Correct Fill that Hes Run
+ if(allFieldsCorrect){
+  console.log('line no 49', allFieldsCorrect);
+   let d = createUserWithEmailAndPassword(auth, userValue.email, userValue.pass)
+   .then(i => console.log('then i', i))
+   .catch(err => console.log('catch err', err))
+
+ }
+
+}
+
+
+
+
+// NAVBAR ON / OFF  FUNCTION
+window.navOn = function () {
+  let ul =         document.querySelector(".navbar");          // GET KR RHA JIS JIS PR CLASS ADD KRNI
+  let offerMsg =   document.querySelector(".offerMsg");
+  let counterDiv = document.querySelector(".card-items-count");
+  let profileDiv = document.querySelector(".profile");
+    ul.classList.toggle('Show')                               // SET KR RHA CLASS JIS JIS KO GET KIYA
+    offerMsg.classList.toggle('Show')
+    counterDiv.classList.toggle('Show')
+    profileDiv.classList.toggle('Show')
+}
+
+// SLIDEBAR / Crousel CODE START
+window.crousel = function (){
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+  const bullets = document.querySelectorAll(".bullet-btn");
+  const totalSlides = slides.length;
+
+  function showSlide(index) {
+    if (index >= totalSlides) {
+      currentSlide = 0;
+    } else if (index < 0) {
+      currentSlide = totalSlides - 1;
+    } else {
+      currentSlide = index;
+    }
+
+    // Move the slider to the correct slide
+    const slider = document.querySelector(".slider");
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Update the active bullet
+    bullets.forEach((bullet) => bullet.classList.remove("active"));
+    bullets[currentSlide].classList.add("active");
+  }
+
+  // Automatic slide change every 3 seconds
+  setInterval(() => {
+    showSlide(currentSlide + 1);
+  }, 3000);
+
+  // Bullet navigation
+  bullets.forEach((bullet) => {
+    bullet.addEventListener("click", (e) => {
+      const index = parseInt(e.target.dataset.slide);
+      showSlide(index);
+    });
+  });
+
+  // Initialize the first slide
+  showSlide(currentSlide);
+}
+// SLIDEBARCODE END
+
 
 
 // Set Products Data in Database
@@ -11,7 +123,7 @@ console.log(organicStoreItems);
      setDoc(doc(db, 'OrganicProducts/allProducts'), organicStoreItems)
   } 
  
-
+// get Products Data by DataBase
 async function getProductsInFb () {
   let allProductsStore;
      try {
@@ -25,8 +137,7 @@ async function getProductsInFb () {
 }
 
 
-
-
+// Categories like fruit drinks div Praint
 function categoryDivcPrint () {
   let mainDiv = document.querySelector('.section2Categoriesmain')
   let snapC = getProductsInFb()
@@ -46,6 +157,7 @@ function categoryDivcPrint () {
 })})
   .catch(err => console.error(err))
 }
+
 
 //  This Function Prints Categories ka jo  Products Ha Woh
 window.productsPrint = function (productCate){
@@ -84,14 +196,16 @@ window.productsPrint = function (productCate){
 }
 
 
-
 // This condition is when true jb page shop ka hu ga
-if(window.location.href.includes('Shop')){
+if(window.location.href.includes('shop')){
+  crousel()
   addProductsInFB()
   getProductsInFb()
   categoryDivcPrint()
   productsPrint('Fruits')
 }
+
+
 
 // Product Select Function on + Icon Div
 window.productSelect = function (e){
@@ -196,59 +310,6 @@ window.pSQuantityDecre = function(){
 }
 
 
-// NAVBAR ON / OFF  FUNCTION
-window.navOn = function () {
-  let ul =         document.querySelector(".navbar");          // GET KR RHA JIS JIS PR CLASS ADD KRNI
-  let offerMsg =   document.querySelector(".offerMsg");
-  let counterDiv = document.querySelector(".card-items-count");
-  let profileDiv = document.querySelector(".profile");
-    ul.classList.toggle('Show')                               // SET KR RHA CLASS JIS JIS KO GET KIYA
-    offerMsg.classList.toggle('Show')
-    counterDiv.classList.toggle('Show')
-    profileDiv.classList.toggle('Show')
-}
 
 
-// SLIDEBAR CODE START
-//  shop ki file ma gya to he slidebar chale ga slidebar sirf shop wali file ma ha
-if (window.location.href.includes("Shop")){
-  let currentSlide = 0;
-  const slides = document.querySelectorAll(".slide");
-  const bullets = document.querySelectorAll(".bullet-btn");
-  const totalSlides = slides.length;
 
-  function showSlide(index) {
-    if (index >= totalSlides) {
-      currentSlide = 0;
-    } else if (index < 0) {
-      currentSlide = totalSlides - 1;
-    } else {
-      currentSlide = index;
-    }
-
-    // Move the slider to the correct slide
-    const slider = document.querySelector(".slider");
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    // Update the active bullet
-    bullets.forEach((bullet) => bullet.classList.remove("active"));
-    bullets[currentSlide].classList.add("active");
-  }
-
-  // Automatic slide change every 3 seconds
-  setInterval(() => {
-    showSlide(currentSlide + 1);
-  }, 3000);
-
-  // Bullet navigation
-  bullets.forEach((bullet) => {
-    bullet.addEventListener("click", (e) => {
-      const index = parseInt(e.target.dataset.slide);
-      showSlide(index);
-    });
-  });
-
-  // Initialize the first slide
-  showSlide(currentSlide);
-}
-// SLIDEBARCODE END

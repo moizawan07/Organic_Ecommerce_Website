@@ -6,6 +6,7 @@
     <title>E-Commerce-Website</title>
     <link rel="stylesheet" href="signup.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -13,21 +14,45 @@
             <h1>Sign Up</h1>
             <p>Create an account so you can order your <br> favourite product easily and quickly.</p>
         </div>
+
         <div class="second-inputs">
-            <input type="text" placeholder="Name" id="Name" required>
-            <input type="email" placeholder="Email" id="Email" required>
-            <input type="number" placeholder="Phone Number" id="phonenumber" required>
-            <input type="password" placeholder="Password" id="Password">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="Name" required>
+                <label for="Name">Name</label>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="Email" required>
+                <label for="Email">Email</label>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="number" id="phonenumber" required>
+                <label for="phonenumber">Phone Number</label>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="Password" required>
+                <label for="Password">Password</label>
+            </div>
         </div>
+
         <div class="third-butons">
-            <button onclick ='signUp()'>Sign Up</button>
+            <button onclick="signUp()">Sign Up</button>
         </div>
+
         <div class="last-but">
-            <button class="f">Login With facebook</button>
-            <button class="g">Login With Gmail</button>
-            <p>Already have an account? <a href="login page/login.html">Login</a></p>
+            <button class="f"><i class="fab fa-facebook"></i> Login With Facebook</button>
+            <button class="g"><i class="fab fa-google"></i> Login With Google</button>
+            <p>Already have an account? <a href="../login/login.html">Login</a></p>
         </div>
     </div>
-    <script src="app.js"></script>  
+
+    <script type="module" src="../JavaScript/firebase.js"></script>
+    <script type="module" src="../JavaScript/app.js"></script>
 </body>
 </html>

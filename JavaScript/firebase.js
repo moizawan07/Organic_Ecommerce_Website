@@ -1,8 +1,23 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-// import { getAuth } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js'
-// import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js'
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, doc, getDoc , setDoc , collection } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+// For FIREBASE AUTHENTICATION 
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+// For FIREBASE FIRSTORE DATABASE
+import {
+   getFirestore,
+   doc,
+   getDoc , 
+   setDoc , 
+  collection 
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 
 
   // Your web app's Firebase configuration
@@ -19,8 +34,11 @@ import { getFirestore, doc, getDoc , setDoc , collection } from "https://www.gst
 const app = initializeApp(firebaseConfig);
 
 //  Initailize Services
-// const auth = getAuth(app)
+const auth = getAuth(app)
 const db = getFirestore(app)
 
+
 // Export For The Other Files
-export { db , doc ,getDoc, setDoc, collection}
+export { db , doc ,getDoc, setDoc, collection,         
+         auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
+}
