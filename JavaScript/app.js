@@ -400,6 +400,7 @@ window.pSQuantityDecre = function(){
 window.Addtocardclicked = function(prodInfo){
   // Yhn Agr LocalStorege ma hoga whi array aajiga wrna new Create hojai ga
   let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) || []
+  let productLenghtPrint = document.querySelector('#item-counte')
   let selectPInfoSto = {
       name :  prodInfo.parentNode.parentNode.childNodes[3].childNodes[3].innerText,
       imgSrc :prodInfo.parentNode.parentNode.childNodes[3].childNodes[1].childNodes[1].src,
@@ -422,7 +423,7 @@ let updatedPrice = prodInfo.parentNode.parentNode.childNodes[3].childNodes[7].ch
   // First Check USER Login Or Not
    if(!window.localStorage.getItem('userLogin')){
     alert('first login')
-    window.location.href = '../login/login.html'
+   return window.location.href = '../login/login.html'
    }
 
    
@@ -431,21 +432,94 @@ let updatedPrice = prodInfo.parentNode.parentNode.childNodes[3].childNodes[7].ch
 // Quantity Increment hu dobra wo Product kii alll Info Stored na hu
   
 if(AddToCardItems.length != 0){
-  AddToCardItems.push(selectPInfoSto)
-  console.log('iff ma');
-  let proQuaniIncreObj = AddToCardItems.findIndex((item) => item.name === selectPInfoSto.name)
 
-  console.log(proQuaniIncreObj);
-  localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems))
+  let proQuaniIncreObj = AddToCardItems.findIndex((item) => item.name === selectPInfoSto.name)
+   console.log(proQuaniIncreObj);
+
+   if(proQuaniIncreObj != -1){
+       AddToCardItems[proQuaniIncreObj].quantity += selectPInfoSto.quantity
+   }
+   else{
+    AddToCardItems.push(selectPInfoSto)
+   }
+   
+   
 }
 else{
    AddToCardItems.push(selectPInfoSto)
-  
+  }
   localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems))
-}
+  alert('adddToCard Done')
+  productLenghtPrint.innerText = AddToCardItems.length || ''
+  
   
    
 }
 
+
+window.addToCardProductPrints = function(){
+   let printDiv = document.querySelector('#sl-Secondline-main')
+   let msg = document.querySelector('#msg')
+   let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) || []
+   
+   console.log(AddToCardItems);
+   
+  if(AddToCardItems.length > 0){
+     msg.style.display = 'none'
+
+     AddToCardItems.forEach(item =>{
+      console.log(item);
+      
+      printDiv.innerHTML += `
+      <div class="allLine-flex">
+        <div class="Img-and-description-main">
+          <img src="${item.imgSrc}">
+          <h3> ${item.name} </h3>
+        </div>
+        <div class="Quantity-and-Price-main">
+          <h2 class="Quantity"> ${item.quantity}</h2>
+          </div>
+          <h2 class="Price"> ${item.price} </h2>
+        <div class="remove-btns">
+          <button class="heart">❤</button>
+          <button class="delete" onclick = 'removeAddToCard(this)'>Remove</button>
+        </div>
+      </div>
+    `;
+     })
+  }
+  else{
+    msg.style.display = 'block'
+  }
+   
+   
+}
+
+window.removeAddToCard = function(e){
+  let productName = e.parentNode.parentNode.childNodes[1].childNodes[3].innerText
+  let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) 
+  let msg = document.querySelector('#msg')
+
+  // FindIndex se user ka selct Kiya hua Product KA index Niakl
+  // rha And array me Se US Product Object Ko REmove Kr rha 
+  
+   let findIndex = AddToCardItems.findIndex(item => item.name === productName)
+   AddToCardItems.splice(findIndex, 1)
+
+   localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems)) // Updated Array Set In LocalStorage
+     
+   e.parentNode.parentNode.remove() // Jis Prdoduct ko User ne Remove Kiya us ka DIV  REMOVE KRAYA RUN TIME PA
+
+  //  If Array Empty Msg Show And Remove AddToCardProducts Array By the LocalStoarge
+   if(AddToCardItems.length === 0){
+    localStorage.removeItem("AddToCardProducts")
+    msg.style.display = 'block'
+   }
+  
+}
+
+if(window.location.href.includes('card')){
+  addToCardProductPrints()
+}
 
 
