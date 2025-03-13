@@ -1,31 +1,40 @@
 // Firebase Services Import for the firebase.js
-import { db , doc ,getDoc, setDoc, collection,         
+import { db , doc ,getDoc,addDoc, setDoc, collection, serverTimestamp,      
   auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
 } from './firebase.js'
 
 // This organicStoreItems Is a Object in this all Products Information Stored.
 import organicStoreItems from './productsStores.js'
 
+
+
+// USER SignUp Function
 window.signUp = function(){
+
+  // Stored All SignUp Values in this Object
  let userValue = {
   name : document.querySelector('#Name').value.toLowerCase(),
   email : document.querySelector('#Email').value.toLowerCase(),
   phoneNum : document.querySelector('#phonenumber').value,
   pass : document.querySelector('#Password').value
  }
- let allFieldsCorrect = false
- let nameRegex = /^[A-Za-z]{4,}$/  
+
+
+//  All Fiedls Regex Code Stored
+ let nameRegex = /^[A-Za-z]{3,}(?: [A-Za-z]+)*$/;
  let emailRegex = /^[a-zA-Z0-9._%+-]{4,}@(gmail\.com|yahoo\.com|outlook\.com)$/;  // Email Regex Code
  let phoneRegex = /^\d{11}$/;
- let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6}$/; 
+ let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
-
+// Check User Form Fill Corrrect Or Not
  if(userValue.name && userValue.email && userValue.phoneNum && userValue.pass){
      if(nameRegex.test(userValue.name)){
            if(emailRegex.test(userValue.email)){
               if(phoneRegex.test(userValue.phoneNum)){
                  if(passwordRegex.test(userValue.pass)){
-                  allFieldsCorrect = true
+                  // allFieldsCorrect = true
+                  // Call The function in This Func I add User Data In Db And Authen As well
+                  setSignUpDataInFb()
                  }
                  else{
                   alert('Pass Must than a 6 chracter & contain at least one letter & one number')
@@ -47,18 +56,96 @@ window.signUp = function(){
   alert('All feilds complsary')
  }
 
-//  If All Fields Correct Fill that Hes Run
- if(allFieldsCorrect){
-  console.log('line no 49', allFieldsCorrect);
-   let d = createUserWithEmailAndPassword(auth, userValue.email, userValue.pass)
-   .then(i => console.log('then i', i))
-   .catch(err => console.log('catch err', err))
+ 
+ // If All Fields Fill Properly I call THIS Funct
+async function setSignUpDataInFb(){
 
- }
+  
+  try {
+    //  First Add AUTHENTICATION 
+    let autheUserData = await createUserWithEmailAndPassword(auth, userValue.email, userValue.pass)
+    let authUserIdStore = autheUserData.user.uid;
+    // console.log(authUserIdStore);
+    
+    
+
+   //  SECOND Add USER Data In FireStore DB
+  let dbUserData =  await setDoc(doc(db, 'SignUpUser', authUserIdStore),
+  {
+    ...userValue,  // This Object ki all Propety add hojai ais Obj ma
+    userId: authUserIdStore, 
+    role: 'User',
+    createdAt: serverTimestamp() // Firebase ka automatic timestamp
+
+  }, 
+  { merge: true }) // → Agar document pehle se exist karta hai, to naye fields update honge bina purane delete kiye.
+
+  
+  // After SingUp SucessFully done Paged
+   window.location.href = '../login/login.html'
+  } 
+  catch (error) {
+    alert(error) 
+  }
 
 }
+}
 
+// USER Login Function
+window.login = function(){
+  let emailRegex = /^[a-zA-Z0-9._%+-]{4,}@(gmail\.com|yahoo\.com|outlook\.com)$/;  // Email Regex Code
+  let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+  let userEmail = document.querySelector('#email2').value
+  let userPass = document.querySelector('#password2').value
 
+  if(userEmail && userPass){
+     if(emailRegex.test(userEmail)){
+        if(passwordRegex.test(userPass)){
+           
+          signInWithEmailAndPassword(auth, userEmail, userPass)
+          .then(data => {
+            let loginUserUid = data.user.uid
+            // Set The User id  In The Local Storage That Confirm ka  User Login Ha
+            localStorage.setItem('userLogin',loginUserUid)
+           
+            // Ab Jis User Ne Login Kiya Us User ka ROLE kiya ha Admin HA YA User
+            // Check US Hisab Se Hi Use Route krai ga YA to Dashbord ya To Home Page 
+
+            getDoc(doc(db, 'SignUpUser',loginUserUid))
+            .then(userD => {
+             let loginUserRole = userD.data().role;
+           
+               if(loginUserRole === "Admin"){ // If Admin To Dashbaord
+                 window.location.href = '../Dashboard/dashboard.html'
+               }
+               else{ // AGR ADMIN NHI MEANS USER TO HOME PAGE
+                window.location.href = '../index.html'
+               }
+             
+              
+            })
+            .catch(err => alert(err))
+            
+
+            // Condditional Rendering If Admin Go to The Dashboard If User To Go the Home Page
+
+            // if(userEmail)
+          }) 
+          .catch((err) => alert(err))
+        }
+        else{
+          alert('Invalid Passsword')
+        }
+     }
+     else{
+      alert('Invalid Email')
+    }
+  }
+  else{
+    alert('brhhhh')
+  }
+   
+}
 
 
 // NAVBAR ON / OFF  FUNCTION
@@ -294,7 +381,7 @@ window.pSQuantityIncre = function(){
       
     }
 }
-
+// Product Select Quantity Decrement -
 window.pSQuantityDecre = function(){
   let counterDiv = document.querySelector('#proqunanumber')
   let oprice = document.getElementById('ProductPrice')
@@ -309,7 +396,56 @@ window.pSQuantityDecre = function(){
   
 }
 
+// ADD TO A CARD PRODUCT FUNCTION 
+window.Addtocardclicked = function(prodInfo){
+  // Yhn Agr LocalStorege ma hoga whi array aajiga wrna new Create hojai ga
+  let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) || []
+  let selectPInfoSto = {
+      name :  prodInfo.parentNode.parentNode.childNodes[3].childNodes[3].innerText,
+      imgSrc :prodInfo.parentNode.parentNode.childNodes[3].childNodes[1].childNodes[1].src,
+      price :  null,
+      quantity :Number(prodInfo.parentNode.parentNode.childNodes[3].childNodes[11].innerText),
+  }
 
+
+  //  Price Asal ma 2 Element ka andr Stored ha yhn ma ye Check
+  // krRha ka knsi User ka pass Show Horhi Whi Obj Store kr rha 
+let oldPrice = prodInfo.parentNode.parentNode.childNodes[3].childNodes[7].childNodes[1];
+let updatedPrice = prodInfo.parentNode.parentNode.childNodes[3].childNodes[7].childNodes[3];
+
+  if(getComputedStyle(oldPrice).display === 'block'){
+    selectPInfoSto.price = Number(oldPrice.innerText)
+  }else{
+    selectPInfoSto.price = Number(updatedPrice.innerText)
+  }
+
+  // First Check USER Login Or Not
+   if(!window.localStorage.getItem('userLogin')){
+    alert('first login')
+    window.location.href = '../login/login.html'
+   }
+
+   
+    
+// Now Check ka Agr Aik item Add HA agli br User whi Add kra To Sirf Us kiii
+// Quantity Increment hu dobra wo Product kii alll Info Stored na hu
+  
+if(AddToCardItems.length != 0){
+  AddToCardItems.push(selectPInfoSto)
+  console.log('iff ma');
+  let proQuaniIncreObj = AddToCardItems.findIndex((item) => item.name === selectPInfoSto.name)
+
+  console.log(proQuaniIncreObj);
+  localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems))
+}
+else{
+   AddToCardItems.push(selectPInfoSto)
+  
+  localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems))
+}
+  
+   
+}
 
 
 

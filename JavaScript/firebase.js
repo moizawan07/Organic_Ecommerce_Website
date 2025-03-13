@@ -13,9 +13,11 @@ import {
 import {
    getFirestore,
    doc,
-   getDoc , 
-   setDoc , 
-  collection 
+   getDoc, 
+   setDoc,
+   addDoc, 
+  collection,
+  serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 
@@ -39,6 +41,6 @@ const db = getFirestore(app)
 
 
 // Export For The Other Files
-export { db , doc ,getDoc, setDoc, collection,         
+export { db , doc ,getDoc, addDoc, setDoc, collection, serverTimestamp,        
          auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
 }
