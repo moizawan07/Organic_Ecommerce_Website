@@ -368,6 +368,7 @@ window.pSQuantityIncre = function(){
   let oprice = document.getElementById('ProductPrice')
   let opriceConvertToNum = Number(oprice.innerText)
   let uPrice = document.getElementById('updateProductPrice')
+      uPrice.style.display = 'block'
   let counterDiv = document.querySelector('#proqunanumber')
   let converToNum =    parseInt(counterDiv.innerText)
 
@@ -401,6 +402,10 @@ window.Addtocardclicked = function(prodInfo){
   // Yhn Agr LocalStorege ma hoga whi array aajiga wrna new Create hojai ga
   let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) || []
   let productLenghtPrint = document.querySelector('#item-counte')
+  let modalOffDiv = document.querySelector('.section4ModaalMain');
+  let backGroundBlur = document.querySelector('.background-blur')
+  let QuanicounterSet = document.querySelector('#proqunanumber')
+
   let selectPInfoSto = {
       name :  prodInfo.parentNode.parentNode.childNodes[3].childNodes[3].innerText,
       imgSrc :prodInfo.parentNode.parentNode.childNodes[3].childNodes[1].childNodes[1].src,
@@ -438,25 +443,43 @@ if(AddToCardItems.length != 0){
 
    if(proQuaniIncreObj != -1){
        AddToCardItems[proQuaniIncreObj].quantity += selectPInfoSto.quantity
+       AddToCardItems[proQuaniIncreObj].price += selectPInfoSto.price
    }
    else{
     AddToCardItems.push(selectPInfoSto)
+    productLenghtPrint.innerText =Number(productLenghtPrint.innerText) + 1 
    }
    
    
 }
 else{
    AddToCardItems.push(selectPInfoSto)
+  productLenghtPrint.innerText =Number(productLenghtPrint.innerText) + 1 
   }
+
   localStorage.setItem('AddToCardProducts', JSON.stringify(AddToCardItems))
   alert('adddToCard Done')
-  productLenghtPrint.innerText = AddToCardItems.length || ''
+  // productLenghtPrint.innerText =Number(productLenghtPrint.innerText) + 1 || ''
   
+  console.log(modalOffDiv);
+  
+modalOffDiv.style.display = 'none'
+backGroundBlur.style.display = 'none'
+oldPrice.style.display = 'block'
+updatedPrice.style.display = 'none'
+QuanicounterSet.innerText = 1
   
    
 }
 
+// This Function go to the user in Your Card page
+window.gotoTheCardPage = function(){
+  window.location.href = '../Card/card.html'
+  let itemCounter = document.getElementById('item-counte')
+      itemCounter.innerText = 0
+}
 
+// This Function Prints All AddTo Card Product In The Card File
 window.addToCardProductPrints = function(){
    let printDiv = document.querySelector('#sl-Secondline-main')
    let msg = document.querySelector('#msg')
@@ -491,10 +514,13 @@ window.addToCardProductPrints = function(){
   else{
     msg.style.display = 'block'
   }
+
+  ProductTotaPricePrint()
    
    
 }
 
+// This Function Remove the Product By the Cart
 window.removeAddToCard = function(e){
   let productName = e.parentNode.parentNode.childNodes[1].childNodes[3].innerText
   let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts')) 
@@ -515,7 +541,30 @@ window.removeAddToCard = function(e){
     localStorage.removeItem("AddToCardProducts")
     msg.style.display = 'block'
    }
+
+   ProductTotaPricePrint()
   
+}
+
+
+// This Function Print The Total AddTocard Product Price Print
+// I Call This In the Two Function Firts addToCardProductPrints
+// Second removeAddToCard Reson That KA Product Remove Hone pa
+// Value CHanged hoti rha
+window.ProductTotaPricePrint  = function(){
+  let printDiv = document.getElementById('Total')
+  let AddToCardItems = JSON.parse(localStorage.getItem('AddToCardProducts'))
+  let totalPriceStored = 0;
+
+  if(AddToCardItems){
+  AddToCardItems.forEach((item) => {totalPriceStored+= item.price;})
+}
+else{
+  console.log('else ma');
+  
+  totalPriceStored = 0
+}
+printDiv.innerHTML = totalPriceStored
 }
 
 if(window.location.href.includes('card')){
