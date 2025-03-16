@@ -491,7 +491,7 @@ window.addToCardProductPrints = function(){
      msg.style.display = 'none'
 
      AddToCardItems.forEach(item =>{
-      console.log(item);
+      // console.log(item);
       
       printDiv.innerHTML += `
       <div class="allLine-flex">
@@ -571,4 +571,85 @@ if(window.location.href.includes('card')){
   addToCardProductPrints()
 }
 
+
+// PRODUCTS PURCHASE FUNCTION
+
+window.PurchaseProduct = async function(){
+ let addToCardArr = JSON.parse(window.localStorage.getItem('AddToCardProducts'))
+ let userLoginId = window.localStorage.getItem('userLogin')
+
+//  Check user Login Or Not 
+//& Check user AddProductIn card or not 
+  if(!userLoginId || !addToCardArr){
+        alert('gooo')
+        window.location.href = '../Shop/shop.html'
+        return
+  }
+
+  //  If User Login And AddtoCardProduct This Code Run
+
+  try {
+    let orderRef = doc(db, 'Orders', userLoginId)
+
+    // FIRST GET USER KA ORDER OBJ IF OBJ HA USER KA TO US OBJ
+    // KA ANDR ITEMS KA ARRAY KA ANDR AUR ITEMS ADD HOJYEE
+    // ELSE MA OBJ ADD HOJYEE DIRECT
+    let querySnap =  await getDoc(orderRef)  // Get User Order Obj 
+
+
+    
+    if(querySnap.exists()){        // Agr User ka Obj mile To If New Items be Add Hojyeee ga
+      console.log('ifff ma');
+      
+      let userOrderObj = querySnap.data()
+      userOrderObj.items.push(...addToCardArr)
+     
+      setDoc(orderRef, userOrderObj)
+    }
+
+    else{                         // nhi To Create hojyee ga User Obj and Add User Obj In DAtabase
+      console.log('Else ma');
+ 
+      setDoc(orderRef, {
+            userId : userLoginId,
+            items : addToCardArr,
+            status : 'Pending',
+            createdAt: serverTimestamp(), // Firebase ka automatic timestamp
+          },
+          { merge: true }) // → Agar document pehle se exist karta hai, to naye fields update honge bina purane delete kiye.))
+
+    }
+
+
+
+
+  // //  LocalStorege SE ADDTOCARD ARRAY Delete
+   alert('AddTo Card SucessFully')
+  localStorage.removeItem('AddToCardProducts')
+
+  let msg = document.querySelector('#msg')   
+  let allProductsPrice = document.getElementById('Total')
+  let productsPrintMain = document.querySelectorAll('.allLine-flex')
+      productsPrintMain.forEach(item => item.remove())
+      msg.style.display = 'block' 
+      allProductsPrice.innerHTML = 0
+
+     
+
+
+
+  
+    
+  } 
+  catch (error) {
+    console.log('err',error);
+    
+  }
+
+
+
+
+ 
+  
+}
 
