@@ -13,7 +13,10 @@ import {
 import {
    getFirestore,
    doc,
-   getDoc, 
+   getDoc,
+   getDocs,
+   query,
+   orderBy, 
    setDoc,
    addDoc, 
   collection,
@@ -41,6 +44,8 @@ const db = getFirestore(app)
 
 
 // Export For The Other Files
-export { db , doc ,getDoc, addDoc, setDoc, collection, serverTimestamp,        
-         auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
+export { db , doc ,getDoc, getDocs, addDoc, query,
+        orderBy,  setDoc, collection, serverTimestamp,        
+         auth,createUserWithEmailAndPassword, signInWithEmailAndPassword,
+          onAuthStateChanged, signOut,
 }

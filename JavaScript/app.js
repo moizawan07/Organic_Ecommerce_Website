@@ -1,5 +1,5 @@
 // Firebase Services Import for the firebase.js
-import { db , doc ,getDoc,addDoc, setDoc, collection, serverTimestamp,      
+import { db , doc ,getDoc, getDocs, query, orderBy, addDoc, setDoc, collection, serverTimestamp,      
   auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
 } from './firebase.js'
 
@@ -653,3 +653,85 @@ window.PurchaseProduct = async function(){
   
 }
 
+
+// ======================================= //
+// <----- DASHBOARD JS START HERE ----->
+
+// Document operation functions
+const sideMenu = document.querySelector("aside");
+const menuBtn = document.querySelector("#menu-btn");
+const closeBtn = document.querySelector("#close-btn");
+const themeToggler = document.querySelector(".theme-toggler");
+
+// Show Sidebar
+menuBtn.addEventListener("click", () => {
+  sideMenu.style.display = "block";
+});
+
+// Hide Sidebar
+closeBtn.addEventListener("click", () => {
+  sideMenu.style.display = "none";
+});
+
+// Change Theme
+themeToggler.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme-variables");
+
+  themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
+  themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+});
+
+// Show Orders Table
+
+let multipleTables = document.querySelector('.recent-orders')
+let userTable = document.querySelector('#recent-users--table')
+let userTableBody = document.querySelector('#recent-users--table tbody')
+let orderTable = document.querySelector('#recent-orders--table')
+let tableName = document.querySelector('#tableName')
+
+
+// ------- SIGNUP USERS PRINT WHEN CLICK A USER BUTTON ------
+
+window.signUpUsersPrint = async function(){
+   multipleTables.style.display = 'block'
+   userTable.style.display = 'table'
+   tableName.innerText = 'All Users'
+
+  try {
+   let dbRef =  collection(db, 'SignUpUser')
+   let q = query(dbRef,orderBy('createdAt',"asc"))
+   let querySnapshot = await getDocs(q)
+
+  let allUsersArr = []
+
+  // PUSH ALL USER OBJ IN THE ARRAY
+    querySnapshot.docs.forEach(item => {
+      allUsersArr.push(item.data())        
+    })
+
+    // PRINT IT ALL USERS IN THE TABLE
+
+      allUsersArr.forEach(d => {
+        let date = d.createdAt.toDate();             // DATE YEAR GET KA USER NE KNSI DATE KO SIGNUP HUA THA 
+        let  dtm = date.toLocaleDateString("en-US")
+        
+        
+         userTableBody.innerHTML += `
+           <tr>
+              <td>${d.userId.slice(0,5)}</td>
+              <td>${d.name}</td>
+              <td>${d.email}</td>
+              <td>${d.phoneNum}</td>
+              <td>${dtm}</td>
+              <td class='material-icons-sharp delUser'>delete_forever</td>
+              <td class='material-icons-sharp editUser'>border_color</td>
+            </tr>
+         `
+      })
+  } 
+  catch (error) {
+    console.log('error', error)
+  }
+
+   
+}
