@@ -620,19 +620,28 @@ main .recent-orders a {
 /* END MEDIA QUERIES */
 
 .delUser{
-  color: rgb(234, 65, 98);
-  margin-right: 5px;
+  margin-right: 10px;
   font-size: 17px;
   transition: 0.5s ease-in;
   &:hover{
-    scale: 1.3;
+    color: rgb(234, 65, 98);
+    scale: 1.2;
   }
 }
 .editUser{
   font-size: 17px;
-  color: rgb(3, 122, 3);
   transition: 0.5s ease-in;
   &:hover{
-    scale: 1.3;
+    color: rgb(3, 122, 3);
+    scale: 1.2;
   }
+}
+.sm{
+  font-size: 1.2rem;
+ align-content: center;
+ transition: 0.5s ease-in;
+ &:hover{
+    color: rgb(12, 32, 186);
+    scale: 1.2;
+  } 
 }

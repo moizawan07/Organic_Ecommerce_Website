@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
+    <title>Organic Dashboard</title>
 
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
@@ -26,9 +26,9 @@
         </div>
 
         <div class="sidebar">
-          <a href="#" class="active">
+          <a href="../index.html" class="active">
             <span class="material-icons-sharp"> dashboard </span>
-            <h3>Dashboard</h3>
+           <h3>Dashboard</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> person_outline </span>
@@ -36,7 +36,7 @@
           </a>
           <a href="#">
             <span class="material-icons-sharp"> receipt_long </span>
-            <h3>Orders</h3>
+            <h3 onclick="ordersPrint()">Orders</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> insights </span>
@@ -153,9 +153,7 @@
                 <th>Date</th>
               </tr>
             </thead>
-           <tbody>
-
-           </tbody>
+           <tbody></tbody>
             <!-- Add tbody here | JS insertion -->
           </table>
 
@@ -163,13 +161,16 @@
           <table id="recent-orders--table" style="display: none;">
             <thead>
               <tr>
+                <th style="display: none;">User uid</th>
                 <th>Product Name</th>
-                <th>Product Number</th>
-                <th>Payment</th>
+                <th>Price</th>
+                <th>Date</th>
                 <th>Status</th>
-                <th></th>
+                <th>Quantity</th>
+                <th class="material-icons-sharp sm">dialpad</th>
               </tr>
             </thead>
+            <tbody></tbody>
             <!-- Add tbody here | JS insertion -->
           </table>
 

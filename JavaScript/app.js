@@ -573,10 +573,10 @@ if(window.location.href.includes('card')){
 
 
 // PRODUCTS PURCHASE FUNCTION
-
 window.PurchaseProduct = async function(){
  let addToCardArr = JSON.parse(window.localStorage.getItem('AddToCardProducts'))
  let userLoginId = window.localStorage.getItem('userLogin')
+
 
 //  Check user Login Or Not 
 //& Check user AddProductIn card or not 
@@ -586,65 +586,45 @@ window.PurchaseProduct = async function(){
         return
   }
 
-  //  If User Login And AddtoCardProduct This Code Run
-
-  try {
-    let orderRef = doc(db, 'Orders', userLoginId)
-
-    // FIRST GET USER KA ORDER OBJ IF OBJ HA USER KA TO US OBJ
-    // KA ANDR ITEMS KA ARRAY KA ANDR AUR ITEMS ADD HOJYEE
-    // ELSE MA OBJ ADD HOJYEE DIRECT
-    let querySnap =  await getDoc(orderRef)  // Get User Order Obj 
-
-
-    
-    if(querySnap.exists()){        // Agr User ka Obj mile To If New Items be Add Hojyeee ga
-      console.log('ifff ma');
-      
-      let userOrderObj = querySnap.data()
-      userOrderObj.items.push(...addToCardArr)
-     
-      setDoc(orderRef, userOrderObj)
-    }
-
-    else{                         // nhi To Create hojyee ga User Obj and Add User Obj In DAtabase
-      console.log('Else ma');
- 
-      setDoc(orderRef, {
-            userId : userLoginId,
-            items : addToCardArr,
-            status : 'Pending',
-            createdAt: serverTimestamp(), // Firebase ka automatic timestamp
-          },
-          { merge: true }) // → Agar document pehle se exist karta hai, to naye fields update honge bina purane delete kiye.))
-
-    }
-
-
-
-
-  // //  LocalStorege SE ADDTOCARD ARRAY Delete
-   alert('AddTo Card SucessFully')
-  localStorage.removeItem('AddToCardProducts')
-
-  let msg = document.querySelector('#msg')   
-  let allProductsPrice = document.getElementById('Total')
-  let productsPrintMain = document.querySelectorAll('.allLine-flex')
-      productsPrintMain.forEach(item => item.remove())
-      msg.style.display = 'block' 
-      allProductsPrice.innerHTML = 0
-
-     
-
-
+  // IF USER LOGIN OR ADDTOCARD PRODUCT THAT SETS THE ORDER DAATA IN FIREBASE
 
   
+// Here Iam Add the Order Status in the Products {} 
+// Dedfault Status is Pending Admin can be Update
+
+   for(let i = 0; i < addToCardArr.length; i++){
+     addToCardArr[i].status = 'Pending'
+   }
+    
+  //  Here I Set the Orders In DATABASE
+
+  try {
+    
+    let snapShot = await addDoc(collection(db, "Orders"),{
+      createdAt : serverTimestamp(),
+      items : addToCardArr,
+      userId: userLoginId
+    })
+    console.log('add sucessfull', snapShot);
+
+
+    localStorage.removeItem('AddToCardProducts')
+    let msg = document.querySelector('#msg')   
+   let allProductsPrice = document.getElementById('Total')
+   let productsPrintMain = document.querySelectorAll('.allLine-flex')
+       productsPrintMain.forEach(item => item.remove())
+       msg.style.display = 'block' 
+       allProductsPrice.innerHTML = 0
     
   } 
   catch (error) {
-    console.log('err',error);
+    console.log('err', error);
     
   }
+ 
+
+
+  
 
 
 
@@ -687,6 +667,7 @@ let multipleTables = document.querySelector('.recent-orders')
 let userTable = document.querySelector('#recent-users--table')
 let userTableBody = document.querySelector('#recent-users--table tbody')
 let orderTable = document.querySelector('#recent-orders--table')
+let orderTableBody = document.querySelector('#recent-orders--table tbody')
 let tableName = document.querySelector('#tableName')
 
 
@@ -694,7 +675,9 @@ let tableName = document.querySelector('#tableName')
 
 window.signUpUsersPrint = async function(){
    multipleTables.style.display = 'block'
+   orderTable.style.display = 'none'
    userTable.style.display = 'table'
+   userTableBody.innerHTML = ''   // Pichel Values Remove New Add
    tableName.innerText = 'All Users'
 
   try {
@@ -735,3 +718,144 @@ window.signUpUsersPrint = async function(){
 
    
 }
+
+
+window.ordersPrint = async function(){
+  multipleTables.style.display = 'block'
+   userTable.style.display = 'none'
+   orderTable.style.display = 'table'
+   orderTableBody.innerHTML = ''     // Pichle VAlues Remove New Add
+   tableName.innerText = 'All Orders'
+
+  try {
+    let dbRef =  collection(db, 'Orders')
+    let q = query(dbRef,orderBy('createdAt',"asc"))
+    let querySnapshot = await getDocs(q)
+    let allOrders = []
+    
+    querySnapshot.docs.forEach(item => {
+      allOrders.push(item.data())
+    })
+   
+
+    // PRINTS START HERE 
+    allOrders.forEach(d => {
+       let {items ,createdAt} = d
+       let date = createdAt.toDate();             // DATE YEAR GET KA USER NE KNSI DATE KO SIGNUP HUA THA 
+       let  dtm = date.toLocaleDateString("en-US")
+       
+          items.forEach(e => {
+           orderTableBody.innerHTML += `
+              <tr> 
+                <td> ${e.name} </td>
+                <td> ${e.price} </td>
+                <td> ${dtm} </td>
+                <td> ${e.status} </td>
+                <td> ${e.quantity} </td>
+                <td class='material-icons-sharp sm'> more_vert </td>
+              </tr>
+           `
+            
+          })
+       
+       
+    })
+    
+  }
+   catch (error) {
+    console.log('Orders Not Get Error', error);
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ====== OLD PRODUCT PURCHASE FUNCTION CODE ========
+// window.PurchaseProduct = async function(){
+//   let addToCardArr = JSON.parse(window.localStorage.getItem('AddToCardProducts'))
+//   let userLoginId = window.localStorage.getItem('userLogin')
+ 
+//  //  Check user Login Or Not 
+//  //& Check user AddProductIn card or not 
+//    if(!userLoginId || !addToCardArr){
+//          alert('gooo')
+//          window.location.href = '../Shop/shop.html'
+//          return
+//    }
+ 
+//    //  If User Login And AddtoCardProduct This Code Run
+ 
+//    try {
+//      let orderRef = doc(db, 'Orders', userLoginId)
+ 
+//      // FIRST GET USER KA ORDER OBJ IF OBJ HA USER KA TO US OBJ
+//      // KA ANDR ITEMS KA ARRAY KA ANDR AUR ITEMS ADD HOJYEE
+//      // ELSE MA OBJ ADD HOJYEE DIRECT
+//      let querySnap =  await getDoc(orderRef)  // Get User Order Obj 
+ 
+ 
+     
+//      if(querySnap.exists()){        // Agr User ka Obj mile To If New Items be Add Hojyeee ga
+//        console.log('ifff ma');
+       
+//        let userOrderObj = querySnap.data()
+//        userOrderObj.items.push(...addToCardArr)
+      
+//        setDoc(orderRef, userOrderObj)
+//      }
+ 
+//      else{                         // nhi To Create hojyee ga User Obj and Add User Obj In DAtabase
+//        console.log('Else ma');
+  
+//        setDoc(orderRef, {
+//              userId : userLoginId,
+//              items : addToCardArr,
+//              status : 'Pending',
+//              createdAt: serverTimestamp(), // Firebase ka automatic timestamp
+//            },
+//            { merge: true }) // → Agar document pehle se exist karta hai, to naye fields update honge bina purane delete kiye.))
+ 
+//      }
+ 
+ 
+ 
+ 
+//    // //  LocalStorege SE ADDTOCARD ARRAY Delete
+//     alert('AddTo Card SucessFully')
+//    localStorage.removeItem('AddToCardProducts')
+ 
+//    let msg = document.querySelector('#msg')   
+//    let allProductsPrice = document.getElementById('Total')
+//    let productsPrintMain = document.querySelectorAll('.allLine-flex')
+//        productsPrintMain.forEach(item => item.remove())
+//        msg.style.display = 'block' 
+//        allProductsPrice.innerHTML = 0
+//    } 
+//    catch (error) {
+//      console.log('err',error);
+//    }
+ 
+// }
