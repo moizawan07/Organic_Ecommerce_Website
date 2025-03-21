@@ -16,7 +16,8 @@ window.signUp = function(){
   name : document.querySelector('#Name').value.toLowerCase(),
   email : document.querySelector('#Email').value.toLowerCase(),
   phoneNum : document.querySelector('#phonenumber').value,
-  pass : document.querySelector('#Password').value
+  pass : document.querySelector('#Password').value,
+  location : document.querySelector('#location').value
  }
 
 
@@ -27,15 +28,20 @@ window.signUp = function(){
  let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
 // Check User Form Fill Corrrect Or Not
- if(userValue.name && userValue.email && userValue.phoneNum && userValue.pass){
+ if(userValue.name && userValue.email && userValue.phoneNum && userValue.pass && userValue.location){
      if(nameRegex.test(userValue.name)){
            if(emailRegex.test(userValue.email)){
               if(phoneRegex.test(userValue.phoneNum)){
                  if(passwordRegex.test(userValue.pass)){
-                  // allFieldsCorrect = true
-                  // Call The function in This Func I add User Data In Db And Authen As well
-                  setSignUpDataInFb()
+                     if(userValue.location.length > 10){
+                       // allFieldsCorrect = true
+                       // Call The function in This Func I add User Data In Db And Authen As well
+                       setSignUpDataInFb()
                  }
+                 else{
+                   alert('Location must be 10 charcter')
+                 }
+                }
                  else{
                   alert('Pass Must than a 6 chracter & contain at least one letter & one number')
                  }
@@ -633,15 +639,127 @@ window.PurchaseProduct = async function(){
   
 }
 
+// USER PROFILE FUNCTION
+window.goToTheProfile = async function(){
+ let userLogin = window.localStorage.getItem('userLogin')
+
+//  Check user Login Or not
+ if(!userLogin){
+  return alert('Login Required')
+ }
+  //  if Login to Profile Page pa Ja skta
+  window.location.href = '../Profile/profile.html' 
+ 
+ 
+}
+
+// User Profile function jo muje Form Call krne user nhi kre ga Call 
+
+function profileSetUp (){
+  let userLoginUid = window.localStorage.getItem('userLogin')
+  let namePrint = document.getElementById('userName')
+  let emailPrint = document.getElementById('userEmail')
+
+      getDoc(doc(db,'SignUpUser', userLoginUid))
+  .then(user => {
+    let {name, email} =  user.data();
+    namePrint.innerHTML = name
+    emailPrint.innerHTML = email
+  })
+  .catch(err => console.log('User Get error', err))
+} 
+
+// This Condition Truu When user First Time Enter a Profile Page
+if(window.location.href.includes('Profile')){
+  profileSetUp()  
+}
+
+// User Select To See Their Order Function 
+window.userOrderSea =  async function(){
+ let userLogin = window.localStorage.getItem('userLogin')
+ let orderMsg = document.getElementById('orderMsg')
+ let userOrderTable = document.getElementById('userOrderTable')
+ let userOrderTableTbody = userOrderTable.getElementsByTagName('tbody')
+     userOrderTableTbody[0].innerHTML = '' // Old Values Remove Then New Add
+
+ console.log(userOrderTableTbody);
+ 
+     
+
+  try {
+     let dbRef = collection(db, 'Orders')
+     let q = query(dbRef,orderBy('createdAt', 'desc'))
+     let snapShot = await getDocs(q)
+     let userOrderArr = []
+
+
+    //  HERE I ADD A LOOP FOR CHECK KA JO USER LOGIN HA USKA ALL ORDERS OBJ AND [] MA STORED KRA RHA 
+
+       snapShot.docs.forEach(item => {        // loop order collection
+        let orderObj = item.data()
+
+        if(orderObj.userId === userLogin){   // check login user ka order knkn se ha collection ma se
+         
+          userOrderArr.push(...orderObj.items)  // jo ha wo set kra rha [] ma
+        }
+       })
+
+
+    // Here Print the UserOrderArr
+      if(userOrderArr.length > 0){
+       userOrderTable.style.display = 'table' 
+
+       userOrderArr.forEach(e => {
+       userOrderTableTbody[0].innerHTML += `
+          <tr>  
+            <td><img src='${e.imgSrc}' alt='orderPic'></td>
+            <td>${e.name}</td>
+            <td>${e.price}</td>
+            <td class='Pending'>${e.status}</td>
+            <td>${e.quantity}</td>
+          </tr>
+       `
+        
+       })
+
+      }
+      else{
+        orderMsg.style.display = 'block'
+      }
+     
+   } 
+   catch (error) {
+    console.log('gettting orders error', error);
+    
+   }
+}
+
+// User Logout 
+ window.logOut = async function(){
+   try {
+     await signOut(auth)
+    alert('Logout')
+    localStorage.removeItem('userLogin')
+    window.location.href = '../index.html'
+  
+    
+   } 
+   catch (error) {
+    console.log("logout Error", error);
+    
+   }
+ }
 
 // ======================================= //
 // <----- DASHBOARD JS START HERE ----->
 
 // Document operation functions
+
 const sideMenu = document.querySelector("aside");
 const menuBtn = document.querySelector("#menu-btn");
 const closeBtn = document.querySelector("#close-btn");
 const themeToggler = document.querySelector(".theme-toggler");
+
 
 // Show Sidebar
 menuBtn.addEventListener("click", () => {
@@ -662,8 +780,8 @@ themeToggler.addEventListener("click", () => {
 });
 
 // Show Orders Table
-
 let multipleTables = document.querySelector('.recent-orders')
+let mainProductDiv = document.querySelector('.allProductsMain')
 let userTable = document.querySelector('#recent-users--table')
 let userTableBody = document.querySelector('#recent-users--table tbody')
 let orderTable = document.querySelector('#recent-orders--table')
@@ -676,13 +794,14 @@ let tableName = document.querySelector('#tableName')
 window.signUpUsersPrint = async function(){
    multipleTables.style.display = 'block'
    orderTable.style.display = 'none'
+   mainProductDiv.style.display = 'none'
    userTable.style.display = 'table'
    userTableBody.innerHTML = ''   // Pichel Values Remove New Add
    tableName.innerText = 'All Users'
 
   try {
    let dbRef =  collection(db, 'SignUpUser')
-   let q = query(dbRef,orderBy('createdAt',"asc"))
+   let q = query(dbRef,orderBy('createdAt',"desc"))
    let querySnapshot = await getDocs(q)
 
   let allUsersArr = []
@@ -719,38 +838,54 @@ window.signUpUsersPrint = async function(){
    
 }
 
-
+// Order Print
 window.ordersPrint = async function(){
   multipleTables.style.display = 'block'
    userTable.style.display = 'none'
+   mainProductDiv.style.display= 'none'
    orderTable.style.display = 'table'
    orderTableBody.innerHTML = ''     // Pichle VAlues Remove New Add
    tableName.innerText = 'All Orders'
 
   try {
     let dbRef =  collection(db, 'Orders')
-    let q = query(dbRef,orderBy('createdAt',"asc"))
+    let q = query(dbRef,orderBy('createdAt',"desc"))
     let querySnapshot = await getDocs(q)
     let allOrders = []
     
     querySnapshot.docs.forEach(item => {
       allOrders.push(item.data())
     })
+
+    // console.log('arr', allOrders);
+    
    
 
+    // Here Status ma Select Box bna Ka Print Krna Chah Rha yhn 1variable ma bna ka stored kra rha and niche loop ka table ma Call krdoo ga Kyu ka Sb ki Initally Value Pending ha 
+  let statusSelectBox = `
+  <select class='Pending' id='orderStatusSelectBox' onchange="adminOrderStatusChanged(this)">
+    <option value="Pending">Pending</option>
+    <option value="Accept">Accept</option>
+    <option value="Decline">Decline</option>
+ </select>`
+
     // PRINTS START HERE 
+    // 1: Loop All User Obj Pa Chal rha 
+    // 2: Obj ka Andr items [] jis ma user ka Orders ha us pa chal rha
     allOrders.forEach(d => {
-       let {items ,createdAt} = d
+       let {items ,createdAt,userId} = d
        let date = createdAt.toDate();             // DATE YEAR GET KA USER NE KNSI DATE KO SIGNUP HUA THA 
        let  dtm = date.toLocaleDateString("en-US")
        
           items.forEach(e => {
            orderTableBody.innerHTML += `
               <tr> 
+                <td onmouseover="userOrderInfoCheckShow(this)"  onmouseleave="userOrderInfoCheckHide()"> 
+                ${userId} </td>
                 <td> ${e.name} </td>
                 <td> ${e.price} </td>
                 <td> ${dtm} </td>
-                <td> ${e.status} </td>
+                <td> ${statusSelectBox} </td>
                 <td> ${e.quantity} </td>
                 <td class='material-icons-sharp sm'> more_vert </td>
               </tr>
@@ -767,6 +902,140 @@ window.ordersPrint = async function(){
     
   }
 }
+
+
+// userOrderInfoCheck this Function get User Info ka kis 
+// Ne User ne Order Kiya tha Throw The uid
+window.userOrderInfoCheckShow = async function(e){
+ let userId = e.innerText
+ let tdClicked = e.getBoundingClientRect()
+ let tooltip = document.getElementById('userTooltip')
+ tooltip.style.display = "block"
+// console.log(tdClicked);
+
+ try {
+    let getUser = await getDoc(doc(db, 'SignUpUser', userId))
+    let getUserData = getUser.data()
+
+    tooltip.innerHTML = `
+    <strong>Name:</strong>  ${getUserData.name} <br>
+    <strong>Email:</strong> ${getUserData.email} <br>
+    <strong>Phone:</strong> ${getUserData.phoneNum} <br>
+    <strong>Location:</strong> ${getUserData.location} 
+  `;
+    
+  tooltip.style.top =`${tdClicked.top + window.scrollY + 15}px`;
+  tooltip.style.left =`${tdClicked.left + window.scrollX -35}px`;
+
+    
+ } 
+ catch (error) {
+  console.log('get user error', error);
+  
+ }
+ 
+}
+
+// userOrderInfoCheckHide Hide kr rha means Display None
+window.userOrderInfoCheckHide = function(){
+   let userTooltip = document.getElementById('userTooltip')
+     userTooltip.style.display = 'none'
+}
+
+
+// Admin Changes Order Status Function Like Accept | Decline | Pending
+window.adminOrderStatusChanged = async function(e){
+  let statusValue = e.value
+  let uid =  e.parentNode.parentNode.childNodes[1].innerText;
+  let name = e.parentNode.parentNode.childNodes[3].innerText;
+  let price = e.parentNode.parentNode.childNodes[5].innerText;
+  let date = e.parentNode.parentNode.childNodes[7].innerText;
+  let quan = e.parentNode.parentNode.childNodes[11].innerText;
+  let orderTable = document.getElementById('recent-orders--table')
+  let orderTableTrs = orderTable.getElementsByTagName('tr')
+  
+
+ try {
+  //  1: get Full Collect [] and loop throught Check id  
+  //     is equal to {id}  Then uski status Property changed &
+  //  2:  Set collection [] In The DB 
+
+    let getProduct = await getDocs(query(collection(db, 'Orders',),orderBy('createdAt', 'desc')))
+    let ordersArr = []
+     // set all Collection obj in the OrdersArray
+    getProduct.docs.forEach(items => ordersArr.push(items.data()))
+
+    // NOW Lopp on To the Order Array And Check it ka kis order ka Status Change krna
+    
+       for(let i = 0; i < ordersArr.length; i++){
+         let {userId, items} = ordersArr[i]
+          // Now Hr OBj ma Jo Items [] ha uska andr User ka Order {}
+          // Stored ha Loop ka throught Check krna ka kis ka Staus changed krna
+             items.forEach(item => {
+
+                if(item.name === name && userId === uid){
+                  console.log(item);
+                  
+                }
+             })
+
+             console.log('1 main Obj Cvered');
+             
+       }
+
+      
+      
+
+    
+    
+    
+ } 
+ catch (error) {
+  console.log('get Product Error', error);
+ }
+
+
+  
+
+}
+
+// Go To The All Products SEE Admin
+window.manageProducts = async function(){
+ let mainProductDiv = document.querySelector('.allProductsMain')
+ let printsTablemain = document.querySelector('.recent-orders')
+ let insightsDivMain = document.querySelector('.insights')
+     mainProductDiv.style.display = 'block'
+     printsTablemain.style.display = 'none'
+     insightsDivMain.style.display = 'none'
+ let productPrintTable = document.getElementById('productPrintTable')
+ 
+ let {allProductsArr} = await getProductsInFb()
+ 
+  
+
+    allProductsArr.forEach(obj => {
+      let {categoryName, items} = obj
+
+         items.forEach(item => {
+           productPrintTable.innerHTML += `
+             <tr>
+                <td><img src='${item.imgSrc}' alt='proimg'></td>
+                <td>${item.name}</td>
+                <td>${item.currentPrice}</td>
+                <td>${categoryName}</td>
+                <td class='material-icons-sharp sm'> visibility</td>
+                <td class='material-icons-sharp sm'> colorize </td>
+                <td class='material-icons-sharp sm'> auto_delete </td>
+             </tr>
+           `
+         })
+    })
+ 
+    
+
+}
+
+
 
 
 
