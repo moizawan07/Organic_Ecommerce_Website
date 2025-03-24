@@ -844,7 +844,7 @@ main .recent-orders a {
 .container select, 
 .container textarea {
   width: 100%;
-  padding: 12px;
+  padding: 14px 11px;
   border: 1px solid #b5b3b3;
   border-radius: 7px;
   &:focus{
@@ -882,12 +882,19 @@ main .recent-orders a {
   }
 }
 
+
+.search-bar.dark{
+  background-color: rgb(15, 15, 15);
+}
 .search-bar.dark input,
 .search-bar.dark select, 
 .container.dark input,
 .container.dark select,
 .container.dark textarea{
   background-color:rgb(14, 13, 13) !important;
-  border-color: transparent;
+  border-color: rgb(43, 43, 43);
   color: white;
+  &:focus{
+    border-color: var(--color-danger);
+  }
 }

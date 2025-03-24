@@ -5,8 +5,8 @@ import { db , doc ,getDoc, getDocs, query, orderBy, addDoc, setDoc, updateDoc, c
 
 // This organicStoreItems Is a Object in this all Products Information Stored.
 import organicStoreItems from './productsStores.js'
-
-
+// Create an instance of Notyf
+// var notyf = new Notyf() || '';
 
 // USER SignUp Function
 window.signUp = function(){
@@ -1079,26 +1079,32 @@ window.adminProductAdd = async function(){
 
   console.log(productName);
   
+  
   try {
     let getProducts = await getProductsInFb()
 
+    console.log(getProducts);
       for(let i = 0; i < getProducts.allProductsArr.length; i++){
        let {categoryName, items} = getProducts.allProductsArr[i]
 
-          // if(newCategoryName == categoryName){
-          //     getProducts.allProductsArr[i].items.push({
-          //       name : productName,
-          //       imgSrc : productImg,
-          //       off : productOffPercen,
-          //       currentPrice : productCurrenPrice,
-          //       oldPrice : productOldPrice
-          //     })
-          // setDoc(doc(db, 'OrganicProducts/allProducts'), getProducts)
+          if(newCategoryName == categoryName){
+              getProducts.allProductsArr[i].items.push({
+                name : productName,
+                imgSrc : productImg,
+                off : productOffPercen,
+                currentPrice : productCurrenPrice,
+                oldPrice : productOldPrice
+              })
+
+              console.log(getProducts);
+              
+          setDoc(doc(db, 'OrganicProducts/allProducts'), getProducts)
+           return 'SucessFully Updated'
           }
        
       }
     
-  // } 
+  } 
   catch (error) {
     
   }
