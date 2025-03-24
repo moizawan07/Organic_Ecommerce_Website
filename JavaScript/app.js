@@ -1,5 +1,5 @@
 // Firebase Services Import for the firebase.js
-import { db , doc ,getDoc, getDocs, query, orderBy, addDoc, setDoc, collection, serverTimestamp,      
+import { db , doc ,getDoc, getDocs, query, orderBy, addDoc, setDoc, updateDoc, collection, serverTimestamp,      
   auth,createUserWithEmailAndPassword,  signInWithEmailAndPassword, onAuthStateChanged, signOut,
 } from './firebase.js'
 
@@ -292,7 +292,7 @@ window.productsPrint = function (productCate){
 // This condition is when true jb page shop ka hu ga
 if(window.location.href.includes('shop')){
   crousel()
-  addProductsInFB()
+  // addProductsInFB()
   getProductsInFb()
   categoryDivcPrint()
   productsPrint('Fruits')
@@ -715,7 +715,7 @@ window.userOrderSea =  async function(){
             <td><img src='${e.imgSrc}' alt='orderPic'></td>
             <td>${e.name}</td>
             <td>${e.price}</td>
-            <td class='Pending'>${e.status}</td>
+            <td class='${e.status}'>${e.status}</td>
             <td>${e.quantity}</td>
           </tr>
        `
@@ -777,10 +777,15 @@ themeToggler.addEventListener("click", () => {
 
   themeToggler.querySelector("span:nth-child(1)").classList.toggle("active");
   themeToggler.querySelector("span:nth-child(2)").classList.toggle("active");
+
+  document.getElementById('searchbar').classList.toggle('dark')
+  document.getElementById('AddProductMainDiv').classList.toggle('dark')
 });
 
 // Show Orders Table
+let insightsDivMain = document.querySelector('.insights')
 let multipleTables = document.querySelector('.recent-orders')
+let addToProductMain = document.getElementById('AddProductMainDiv')
 let mainProductDiv = document.querySelector('.allProductsMain')
 let userTable = document.querySelector('#recent-users--table')
 let userTableBody = document.querySelector('#recent-users--table tbody')
@@ -792,10 +797,12 @@ let tableName = document.querySelector('#tableName')
 // ------- SIGNUP USERS PRINT WHEN CLICK A USER BUTTON ------
 
 window.signUpUsersPrint = async function(){
+  insightsDivMain.style.display = 'grid'
    multipleTables.style.display = 'block'
-   orderTable.style.display = 'none'
-   mainProductDiv.style.display = 'none'
    userTable.style.display = 'table'
+   orderTable.style.display = 'none'
+   addToProductMain.style.display = 'none'
+   mainProductDiv.style.display = 'none'
    userTableBody.innerHTML = ''   // Pichel Values Remove New Add
    tableName.innerText = 'All Users'
 
@@ -840,10 +847,12 @@ window.signUpUsersPrint = async function(){
 
 // Order Print
 window.ordersPrint = async function(){
-  multipleTables.style.display = 'block'
-   userTable.style.display = 'none'
-   mainProductDiv.style.display= 'none'
+  insightsDivMain.style.display = 'grid'
+   multipleTables.style.display = 'block'
    orderTable.style.display = 'table'
+   userTable.style.display = 'none'
+   addToProductMain.style.display = 'none'
+   mainProductDiv.style.display= 'none'
    orderTableBody.innerHTML = ''     // Pichle VAlues Remove New Add
    tableName.innerText = 'All Orders'
 
@@ -885,9 +894,16 @@ window.ordersPrint = async function(){
                 <td> ${e.name} </td>
                 <td> ${e.price} </td>
                 <td> ${dtm} </td>
-                <td> ${statusSelectBox} </td>
+                <td> 
+                    <select class='${e.status}' id='orderStatusSelectBox' onchange="adminOrderStatusChanged(this)">
+                        <option value="Pending" ${e.status === 'Pending' ? "selected" : ''}>Pending</option>
+                        <option value="Accept"  ${e.status === 'Accept'  ? "selected" : ''}>Accept</option>
+                        <option value="Decline" ${e.status === 'Decline' ? "selected" : ''}>Decline</option>
+                    </select> 
+                </td>
                 <td> ${e.quantity} </td>
                 <td class='material-icons-sharp sm'> more_vert </td>
+                <td class='orderSeconds'> ${createdAt.seconds} </td>
               </tr>
            `
             
@@ -946,13 +962,11 @@ window.userOrderInfoCheckHide = function(){
 // Admin Changes Order Status Function Like Accept | Decline | Pending
 window.adminOrderStatusChanged = async function(e){
   let statusValue = e.value
+      e.className = statusValue   // Update the selectBox class
   let uid =  e.parentNode.parentNode.childNodes[1].innerText;
   let name = e.parentNode.parentNode.childNodes[3].innerText;
-  let price = e.parentNode.parentNode.childNodes[5].innerText;
-  let date = e.parentNode.parentNode.childNodes[7].innerText;
-  let quan = e.parentNode.parentNode.childNodes[11].innerText;
-  let orderTable = document.getElementById('recent-orders--table')
-  let orderTableTrs = orderTable.getElementsByTagName('tr')
+  let seconds = e.parentNode.parentNode.childNodes[15].innerText
+  
   
 
  try {
@@ -961,23 +975,33 @@ window.adminOrderStatusChanged = async function(e){
   //  2:  Set collection [] In The DB 
 
     let getProduct = await getDocs(query(collection(db, 'Orders',),orderBy('createdAt', 'desc')))
+    
     let ordersArr = []
-     // set all Collection obj in the OrdersArray
-    getProduct.docs.forEach(items => ordersArr.push(items.data()))
+     // Set all Collection obj With the document id in the OrdersArray
+    getProduct.docs.forEach(items => ordersArr.push({documentId : items.id, ...items.data()}))
+    console.log(ordersArr);
+    
 
     // NOW Lopp on To the Order Array And Check it ka kis order ka Status Change krna
-    
        for(let i = 0; i < ordersArr.length; i++){
-         let {userId, items} = ordersArr[i]
+
+         let {userId, createdAt, items, documentId} = ordersArr[i] // Desctrring here
+
           // Now Hr OBj ma Jo Items [] ha uska andr User ka Order {}
           // Stored ha Loop ka throught Check krna ka kis ka Staus changed krna
-             items.forEach(item => {
+           for(let j = 0; j < items.length; j++){
+              
+               if(name === items[j].name && uid === userId && seconds == createdAt.seconds){
+                //  Update the status with the Cureent Status
+                 ordersArr[i].items[j].status = statusValue;
 
-                if(item.name === name && userId === uid){
-                  console.log(item);
-                  
-                }
-             })
+                //  Now Push In The DataBase and Return
+                console.log('document id', documentId);
+                
+                let updateInFb =  await updateDoc(doc(db, 'Orders', documentId), {items : ordersArr[i].items}) 
+               }
+               
+           }
 
              console.log('1 main Obj Cvered');
              
@@ -1001,12 +1025,11 @@ window.adminOrderStatusChanged = async function(e){
 
 // Go To The All Products SEE Admin
 window.manageProducts = async function(){
- let mainProductDiv = document.querySelector('.allProductsMain')
- let printsTablemain = document.querySelector('.recent-orders')
- let insightsDivMain = document.querySelector('.insights')
      mainProductDiv.style.display = 'block'
-     printsTablemain.style.display = 'none'
+     multipleTables.style.display = 'none'
+     addToProductMain.style.display = 'none'
      insightsDivMain.style.display = 'none'
+
  let productPrintTable = document.getElementById('productPrintTable')
  
  let {allProductsArr} = await getProductsInFb()
@@ -1025,7 +1048,7 @@ window.manageProducts = async function(){
                 <td>${categoryName}</td>
                 <td class='material-icons-sharp sm'> visibility</td>
                 <td class='material-icons-sharp sm'> colorize </td>
-                <td class='material-icons-sharp sm'> auto_delete </td>
+                <td class='material-icons-sharp sm productDelete' onclick='adminProductDelete(this)'> auto_delete </td>
              </tr>
            `
          })
@@ -1035,8 +1058,94 @@ window.manageProducts = async function(){
 
 }
 
+// Go To the Add Product Section Admin Here Add Product
+window.adminGotoTheAddProduct = function(){
+  addToProductMain.style.display = 'block'
+  mainProductDiv.style.display = 'none'
+  multipleTables.style.display = 'none'
+  insightsDivMain.style.display = 'none'
+}
 
+// Admin Product Add
+window.adminProductAdd = async function(){
+  let newCategoryName = document.getElementById('categoryName').value
+  let productName = document.getElementById('prdocutName').value
+  let productImg = document.getElementById('prdocutImg').value
+  let productOffPercen = document.getElementById('productOffPercentage').value
+  let productCurrenPrice = document.getElementById('productCurrPrice').value
+  let productOldPrice = document.getElementById('productOldPrice').value
 
+  // Now Add In This Product In The Main 
+
+  console.log(productName);
+  
+  try {
+    let getProducts = await getProductsInFb()
+
+      for(let i = 0; i < getProducts.allProductsArr.length; i++){
+       let {categoryName, items} = getProducts.allProductsArr[i]
+
+          // if(newCategoryName == categoryName){
+          //     getProducts.allProductsArr[i].items.push({
+          //       name : productName,
+          //       imgSrc : productImg,
+          //       off : productOffPercen,
+          //       currentPrice : productCurrenPrice,
+          //       oldPrice : productOldPrice
+          //     })
+          // setDoc(doc(db, 'OrganicProducts/allProducts'), getProducts)
+          }
+       
+      }
+    
+  // } 
+  catch (error) {
+    
+  }
+ 
+  
+}
+
+// Admin Product Delete 
+window.adminProductDelete = async function(e){
+  let dProductName = e.parentNode.childNodes[3].innerText
+
+ try {
+  let getProducts =  await getProductsInFb()
+  console.log('Before Products', getProducts);
+  
+  for(let i = 0; i < getProducts.allProductsArr.length; i++){
+    // destring Here For The Items Arr IN this Stored Categoies wise Product
+  let {items} = getProducts.allProductsArr[i]
+  
+     for(let j = 0; j < items.length; j++){
+       if(items[j].name === dProductName){
+       console.log('return Remove Obj', getProducts.allProductsArr[i].items.splice(j,1))
+       
+      //  Now Update Products Arr Push In The DataBase
+      setDoc(doc(db, 'OrganicProducts/allProducts'), getProducts)
+      return
+ 
+       }
+      
+      
+     }
+     
+     console.log('hello');
+     
+  }
+
+  console.log('After Products', getProducts);
+
+ } 
+ catch (error) {
+  console.log('err', error);
+  
+ }
+
+ 
+ 
+}
 
 
 

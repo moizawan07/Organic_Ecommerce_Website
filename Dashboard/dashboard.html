@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="./dash.css" />
   </head>
   <body>
-    <div class="container">
+   
+    <div class="Maincontainer">
       <aside>
         <div class="top">
           <div class="logo">
@@ -61,7 +62,7 @@
           </a>
           <a href="#">
             <span class="material-icons-sharp"> add </span>
-            <h3>Add Product</h3>
+            <h3 onclick="adminGotoTheAddProduct()">Add Product</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> logout </span>
@@ -185,7 +186,7 @@
          <div class="allProductsMain">
              <h2>Manage Products</h2>
              <div class="header">
-                      <div class="search-bar">
+                      <div class="search-bar" id="searchbar">
                           <input type="text" placeholder="Search products...">
                           <select>
                               <option>Vegetables</option>
@@ -202,7 +203,7 @@
                               <option>Name: Z-A</option>
                           </select>
                           <button>Filter</button>
-                          <button>+ Add new product</button>
+                          <button onclick="adminGotoTheAddProduct()">+ Add new product</button>
                       </div>
                  
              </div>
@@ -217,6 +218,79 @@
               </tr>
              </table>
          </div>
+
+         <!-- Admin Add Product Section -->
+         <div class="container" id="AddProductMainDiv">
+             <h2>Add Product</h2>
+             
+             <input type="text" class="image-upload" id="prdocutImg" placeholder= "Image - Click to Browse">
+             <div class="form-group">
+                 <div>
+                     <label>Product Name</label>
+                     <input type="text" placeholder="Enter product name" id="prdocutName">
+                 </div>
+                 <div>
+                     <label>Product Category</label>
+                     <select id="categoryName">
+                         <option>Choose a category</option>
+                         <option>Fruits</option>
+                         <option>Vegetables</option>
+                         <option>Drinks</option>
+                         <option>DryFruits</option>
+                         <option>Noodles</option>
+                         <option>Snakes</option>
+                     </select>
+                 </div>
+             </div>
+         
+             <div class="form-group">
+                 <div>
+                     <label>Weight</label>
+                     <input type="text" placeholder="In gm & kg" disabled>
+                 </div>
+                 <div>
+                     <label>SKU</label>
+                     <input type="text" placeholder="SKU" disabled>
+                 </div>
+             </div>
+         
+             <div class="form-group">
+                 <div>
+                     <label>Description</label>
+                     <textarea placeholder="Short description about the product" rows="2" disabled></textarea>
+                 </div>
+             </div>
+         
+             <div class="form-group">
+                 <div>
+                     <label>Status</label>
+                     <input type="text" placeholder="Sale | New" disabled>
+                 </div>
+                 <div>
+                     <label>Stock</label>
+                     <input type="text" id="productOffPercentage" placeholder="Off | off percentage ">
+                 </div>
+             </div>
+         
+             <div class="form-group">
+                 <div>
+                     <label>Cureent Price</label>
+                     <input type="number" id="productCurrPrice" placeholder="$ 000">
+                 </div>
+                 <div>
+                     <label>Old Price</label>
+                     <input type="number" id="productOldPrice" placeholder="$ 000">
+                 </div>
+             </div>
+         
+             <div class="btn-container">
+                 <button class="btn btn-add" onclick="adminProductAdd()">Add Product</button>
+                 <button class="btn btn-cancel">Cancel</button>
+             </div>
+         </div>
+         
+         
+         
 
       </main>
 
@@ -258,8 +332,8 @@
           </div>
         </div>
       </div>
-    </div>
-
+   
+</div>
 
 
    <script type="module" src="../JavaScript/firebase.js"></script>

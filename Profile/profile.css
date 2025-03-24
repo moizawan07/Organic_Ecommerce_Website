@@ -209,6 +209,12 @@ h1 {
 .Pending{
     color: rgb(221, 144, 0);
 }
+.Accept{
+    color: green;
+}
+.Decline{
+    color: crimson;
+}
 
 @media (max-width:882px) {
     .header{

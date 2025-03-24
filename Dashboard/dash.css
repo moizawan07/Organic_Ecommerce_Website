@@ -61,7 +61,7 @@ body {
   overflow-x: hidden;
   color: var(--color-dark);
 }
-.container {
+.Maincontainer {
   display: grid;
   width: 96%;
   margin: 0 auto;
@@ -482,7 +482,7 @@ main .recent-orders a {
 /* START MEDIA QUERIES */
 /* TABLETS AND SMALL LAPTOPS */
 @media screen and (max-width: 1200px) {
-  .container {
+  .Maincontainer {
     width: 94%;
     grid-template-columns: 7rem auto 23rem;
   }
@@ -525,7 +525,7 @@ main .recent-orders a {
 
 /* SMALL TABLETS AND MOBILE */
 @media screen and (max-width: 768px) {
-  .container {
+  .Maincontainer {
     width: 100%;
     grid-template-columns: 1fr;
   }
@@ -646,16 +646,32 @@ main .recent-orders a {
   } 
 }
 
-.Pending{
+#orderStatusSelectBox{
   background-color: transparent;
+  border-radius: 2px;
   padding-block: 3px;
-  border-radius: 3px;
-  padding-inline: 10px;
-  color: var(--color-warning);
+  padding-inline: 15px;
+  text-align: center;
+  font-weight: 500;
 }
-.Pending option{
+#orderStatusSelectBox option{
   color: black;
-}#recent-orders--table tr td:first-child{
+}
+
+.Pending{
+  color: rgb(246, 177, 3);
+  background-color: rgb(252, 252, 227) !important;
+}
+.Accept {
+  color: rgb(7, 129, 7); 
+  background-color: rgb(236, 246, 221) !important; 
+}
+.Decline{
+  color: rgb(217, 49, 83);
+  background-color: rgb(249, 239, 241) !important;
+}
+
+#recent-orders--table tr td:first-child{
   display: inline-block;
   width: 50px !important; /* Sirf itna width jitna 5 characters show ho */
   text-overflow: ellipsis !important; /* Jo extra ho wo "..." me convert ho jayega */
@@ -663,7 +679,6 @@ main .recent-orders a {
   white-space: nowrap;
   overflow: hidden;
 }
-
 
 
 /* ToolTip */
@@ -712,12 +727,17 @@ main .recent-orders a {
     border: none;
     border-radius: 5px;
     font-size: 14px;
+    /* border: 1px solid #b5b3b3; */
 }
 .search-bar input {
     flex: 1;
-    background: #1e1e2f;
-    background-color: #17191b;
+    /* background: #1e1e2f; */
+    /* background-color: #0e0e0e; */
+    border: 1px solid #b5b3b3;
     color: white;
+    &:focus{
+      border: 1px solid var(--color-danger);
+    }
 }
 .search-bar button {
     background-color: #ff4d4d;
@@ -728,9 +748,17 @@ main .recent-orders a {
     background-color: #e43e3e;
 }
 .search-bar select {
-    background: #1e1e2f;
-    background-color: #17191b;
-    color: white;
+    /* background: #1e1e2f;
+    background-color: #0e0e0e; */
+    border: 1px solid #b5b3b3;
+    padding-block: 12px !important;
+    /* color: white; */
+    &:hover{
+      border: 1px solid var(--color-danger);
+    }
+}
+.productDelete{
+  color: red;
 }
 @media (max-width: 768px) {
     .header {
@@ -768,4 +796,98 @@ main .recent-orders a {
 
 #productPrintTable tr{
   border-bottom: 1px solid rgb(175, 172, 172);
+}
+.orderSeconds{
+  display: none;
+}
+
+
+/* Add Product  */
+
+.container {
+  width: 100%;
+  margin: 20px auto;
+  display: none;
+}
+
+.container .image-upload {
+  border: 2px dashed #555;
+  text-align: center;
+  padding: 40px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:focus{
+    border-color: var(--color-danger);
+  }
+}
+
+#prdocutName{
+  text-transform: capitalize !important;
+}
+.container .form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.container .form-group div {
+  flex: 1;
+}
+
+.container label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.container input, 
+.container select, 
+.container textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #b5b3b3;
+  border-radius: 7px;
+  &:focus{
+    border-color: var(--color-danger);
+  }
+}
+
+.container .btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.container .btn-container button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.container .btn-container .btn-add {
+  background: #ff5252;
+  color: white;
+}
+
+.container .btn-container .btn-cancel {
+  background: gray;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .container .form-group {
+      flex-direction: column;
+  }
+}
+
+.search-bar.dark input,
+.search-bar.dark select, 
+.container.dark input,
+.container.dark select,
+.container.dark textarea{
+  background-color:rgb(14, 13, 13) !important;
+  border-color: transparent;
+  color: white;
 }
