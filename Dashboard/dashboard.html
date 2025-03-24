@@ -27,17 +27,17 @@
         </div>
 
         <div class="sidebar">
-          <a href="../index.html" class="active">
+          <a href="#" class="active">
             <span class="material-icons-sharp"> dashboard </span>
            <h3>Dashboard</h3>
           </a>
-          <a href="#">
+          <a href="#" onclick="signUpUsersPrint()">
             <span class="material-icons-sharp"> person_outline </span>
-            <h3 onclick="signUpUsersPrint()">Users</h3>
+            <h3>Users</h3>
           </a>
-          <a href="#">
+          <a href="#" onclick="ordersPrint()">
             <span class="material-icons-sharp"> receipt_long </span>
-            <h3 onclick="ordersPrint()">Orders</h3>
+            <h3>Orders</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> insights </span>
@@ -48,9 +48,9 @@
             <h3>Messages</h3>
             <span class="message-count">26</span>
           </a>
-          <a href="#">
+          <a href="#" onclick="manageProducts()">
             <span class="material-icons-sharp"> inventory </span>
-            <h3 onclick="manageProducts()">Manage Products</h3>
+            <h3>Manage Products</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> report_gmailerrorred </span>
@@ -60,9 +60,9 @@
             <span class="material-icons-sharp"> settings </span>
             <h3>Settings</h3>
           </a>
-          <a href="#">
+          <a href="#" onclick="adminGotoTheAddProduct()">
             <span class="material-icons-sharp"> add </span>
-            <h3 onclick="adminGotoTheAddProduct()">Add Product</h3>
+            <h3>Add Product</h3>
           </a>
           <a href="#">
             <span class="material-icons-sharp"> logout </span>
@@ -209,13 +209,16 @@
              </div>
 
              <table id="productPrintTable">
-              <tr>
-                <th>Product</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Action</th>
-              </tr>
+               <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Action</th>
+                </tr>
+               </thead>
+               <tbody id="allProductPrintTbody"></tbody>
              </table>
          </div>
 

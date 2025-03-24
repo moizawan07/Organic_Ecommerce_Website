@@ -8,6 +8,14 @@ import organicStoreItems from './productsStores.js'
 // Create an instance of Notyf
 // var notyf = new Notyf() || '';
 
+// User Go To the SignUp Or The Login Page
+window.toggleModal = function() {
+  let modal = document.getElementById("modal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+
+
+
 // USER SignUp Function
 window.signUp = function(){
 
@@ -20,6 +28,7 @@ window.signUp = function(){
   location : document.querySelector('#location').value
  }
 
+console.log(userValue);
 
 //  All Fiedls Regex Code Stored
  let nameRegex = /^[A-Za-z]{3,}(?: [A-Za-z]+)*$/;
@@ -160,11 +169,14 @@ window.navOn = function () {
   let offerMsg =   document.querySelector(".offerMsg");
   let counterDiv = document.querySelector(".card-items-count");
   let profileDiv = document.querySelector(".profile");
+  let dots = document.querySelector('.dots')
     ul.classList.toggle('Show')                               // SET KR RHA CLASS JIS JIS KO GET KIYA
     offerMsg.classList.toggle('Show')
     counterDiv.classList.toggle('Show')
     profileDiv.classList.toggle('Show')
+    dots.classList.toggle('Show')
 }
+
 
 // SLIDEBAR / Crousel CODE START
 window.crousel = function (){
@@ -754,12 +766,20 @@ window.userOrderSea =  async function(){
 // <----- DASHBOARD JS START HERE ----->
 
 // Document operation functions
-
 const sideMenu = document.querySelector("aside");
 const menuBtn = document.querySelector("#menu-btn");
 const closeBtn = document.querySelector("#close-btn");
 const themeToggler = document.querySelector(".theme-toggler");
-
+// Show Orders Table
+let insightsDivMain = document.querySelector('.insights')
+let multipleTables = document.querySelector('.recent-orders')
+let addToProductMain = document.getElementById('AddProductMainDiv')
+let mainProductDiv = document.querySelector('.allProductsMain')
+let userTable = document.querySelector('#recent-users--table')
+let userTableBody = document.querySelector('#recent-users--table tbody')
+let orderTable = document.querySelector('#recent-orders--table')
+let orderTableBody = document.querySelector('#recent-orders--table tbody')
+let tableName = document.querySelector('#tableName')
 
 // Show Sidebar
 menuBtn.addEventListener("click", () => {
@@ -782,16 +802,6 @@ themeToggler.addEventListener("click", () => {
   document.getElementById('AddProductMainDiv').classList.toggle('dark')
 });
 
-// Show Orders Table
-let insightsDivMain = document.querySelector('.insights')
-let multipleTables = document.querySelector('.recent-orders')
-let addToProductMain = document.getElementById('AddProductMainDiv')
-let mainProductDiv = document.querySelector('.allProductsMain')
-let userTable = document.querySelector('#recent-users--table')
-let userTableBody = document.querySelector('#recent-users--table tbody')
-let orderTable = document.querySelector('#recent-orders--table')
-let orderTableBody = document.querySelector('#recent-orders--table tbody')
-let tableName = document.querySelector('#tableName')
 
 
 // ------- SIGNUP USERS PRINT WHEN CLICK A USER BUTTON ------
@@ -1030,7 +1040,10 @@ window.manageProducts = async function(){
      addToProductMain.style.display = 'none'
      insightsDivMain.style.display = 'none'
 
- let productPrintTable = document.getElementById('productPrintTable')
+ let productPrintTable = document.getElementById('allProductPrintTbody')
+     productPrintTable.innerHTML = ''; // old Remove New Add
+
+ 
  
  let {allProductsArr} = await getProductsInFb()
  
@@ -1099,6 +1112,7 @@ window.adminProductAdd = async function(){
               console.log(getProducts);
               
           setDoc(doc(db, 'OrganicProducts/allProducts'), getProducts)
+           manageProducts()
            return 'SucessFully Updated'
           }
        

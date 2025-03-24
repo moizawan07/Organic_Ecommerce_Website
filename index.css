@@ -65,6 +65,8 @@ body{
 .profile{
     width: 52px;
     height: 52px;
+    position: relative;
+    left: 50px;
 }
 .profile img{
     border: 1.5px dotted #133000;
@@ -91,7 +93,7 @@ body{
     border-radius: 50%;
     text-align: center;
     align-content: center;
-    left: 60px;
+    left: 100px;
 }
 .card-items-count i{
     color: white;
@@ -609,12 +611,32 @@ body{
         transform: translateY(-20px);
         transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     }
+    .dots{
+        position: absolute;
+        top: 435px;
+        left: 70px;
+        z-index: 99999;
+        display: none;
+    }
+    .dots.Show{
+        display: block;
+    }
+    .modal {
+        position: absolute;
+        top: 400px !important;
+        right: 0px;
+        left: 120px;
+        padding: 0px !important;
+    }
+    .modal a {
+        padding: 2px 17px !important;
+    }
     .navbar ul {
         display: block;
         background-color: #E3EFFB;
         padding-left: 50px;
         padding-top: 75px;
-        padding-bottom: 160px;
+        padding-bottom: 180px;
     }
     .navbar ul li {
         line-height: 30px;
@@ -794,6 +816,32 @@ body{
         margin-left: 5px;
     }
 
+}
+
+.dots {
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 999999;
+}
+.modal a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 8px 10px;
+}
+.modal a:hover {
+    background: #f0f0f0;
 }
 
 

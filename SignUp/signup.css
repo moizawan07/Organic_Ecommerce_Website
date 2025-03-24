@@ -1,164 +1,137 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: Arial, sans-serif;
 }
-
 body {
-    background-color: whitesmoke;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: #f4f4f4;
 }
-
 .container {
-    width: 470px;
-    background: white;
-    padding: 30px;
+    width: 80%;
+    max-width: 900px;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgb(205, 203, 203);
+    overflow: hidden;
 }
-
-.first-heading h1 {
-    font-weight: 700;
-    font-size: 26px;
-    color: rgb(254, 104, 50);
+.left {
+    flex: 1;
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    padding: 20px;
 }
-
-.first-heading p {
-    margin-top: 7px;
+.left h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+.left p {
+    font-size: 16px;
+}
+.right {
+    flex: 1;
+    background: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.right h1 {
+    font-size: 24px;
     text-align: center;
-    color: rgb(153, 151, 151);
-    font-size: 13px;
-    line-height: 18px;
+    margin-bottom: 10px;
 }
-
-.second-inputs {
-    margin-top: 20px;
+.right p {
+    text-align: center;
+    color: gray;
+    margin-bottom: 20px;
 }
-
 .input-group {
     position: relative;
-    margin-bottom: 13px;
+    margin-bottom: 20px;
 }
-
-.input-group i {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgb(247, 101, 47);
-}
-
 .input-group input {
     width: 100%;
-    padding: 13px 40px;
+    padding: 12px;
+    padding-left: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-    transition: 0.3s;
+    outline: none;
+    font-size: 16px;
 }
-
-.input-group label {
+.input-group i {
     position: absolute;
-    left: 40px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: gray;
-    font-size: 14px;
-    transition: 0.3s;
-    pointer-events: none;
 }
-
-.input-group input:focus {
-    border-color: rgb(254, 104, 50);
-    outline: none;
-}
-
-.input-group input:focus + label,
-.input-group input:valid + label {
-    top: 0px;
-    font-size: 12px;
-    color: rgb(254, 104, 50);
-    background-color: #FFFF;
-}
-
-.third-butons {
+.button-container {
     text-align: center;
-    margin-top: 20px;
 }
-
-.third-butons button {
-    background-color: rgb(251, 109, 57);
-    color: white;
+.button-container button {
     width: 100%;
-    height: 45px;
+    padding: 12px;
+    background: #ff758c;
     border: none;
+    color: white;
+    font-size: 18px;
     border-radius: 5px;
-    font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
-
-.third-butons button:hover {
-    background: transparent;
-    border: 2px solid rgb(251, 109, 57);
-    color: rgb(251, 109, 57);
+.button-container button:hover {
+    background: #ff5a77;
 }
-
-.last-but {
-    text-align: center;
-    margin-top: 20px;
-    line-height: 55px;
-}
-
-.f, .g {
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    font-weight: bold;
+.social-buttons {
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
 }
-
-.f {
-    border: 1px solid blue;
-    color: blue;
-    background: transparent;
-}
-
-.f:hover {
-    background: blue;
-    color: white;
-}
-
-.g {
-    border: 1px solid crimson;
-    color: crimson;
-    background: transparent;
-}
-
-.g:hover {
-    background: crimson;
-    color: white;
-}
-
-.last-but p {
+.social-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
     font-size: 14px;
-    font-variant: small-caps;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
-
-.last-but p a {
-    color: rgb(254, 104, 50);
+.social-buttons .f {
+    background: #3b5998;
+    color: white;
+}
+.social-buttons .g {
+    background: #db4437;
+    color: white;
+}
+.signup-link {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.signup-link a {
+    color: #ff758c;
     text-decoration: none;
     font-weight: bold;
+}
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .left {
+        display: none;
+    }
 }
