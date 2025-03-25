@@ -880,6 +880,25 @@ main .recent-orders a {
   .container .form-group {
       flex-direction: column;
   }
+  th{
+    font-size: 10px;
+  }
+  td{
+    font-size: 8px;
+    color: red;
+  }
+
+  
+  .delUser {
+    margin-right: 0px;
+    padding-top: 13px;
+    font-size: 11px;
+}
+#orderStatusSelectBox {
+  padding-block: 1.5px;
+  padding-inline: 5px;
+  font-size: 8px;
+}
 }
 
 

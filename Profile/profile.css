@@ -5,6 +5,9 @@
     font-family: 'Poppins', sans-serif;
     text-decoration: none;
 }
+body{
+    border: 1px solid black;
+}
 .leftRightContainer {
     display: flex;
     height: 100vh;
@@ -327,11 +330,39 @@ h1 {
 
 /* For MOBILE */
 @media (max-width:550px) {
+    .sidebar {
+        flex-direction: column;
+    }
+    .menu {
+        justify-content: center;
+    }
+    .menu a{
+    padding: 7px;
+    font-size: 14px;
+    }
+    .content{
+        margin: 15px 0px;
+        padding: 0;
+    }
+    .order-box {
+        width: 90%;
+        padding: 0px;
+        font-size: 15px;
+    }
     .navbar{
         top: 65px;
     }
     .offerMsg p{
         font-size: 18px;
+    }
+    .userSeaOrders table{
+        width: 100%;
+    }
+    .userSeaOrders th{
+        font-size: 13px;
+    }
+    .userSeaOrders td{
+        font-size: 11px;
     }
 }
 

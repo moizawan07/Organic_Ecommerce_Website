@@ -66,6 +66,9 @@
         border-radius: 5px;
         outline: none;
         font-size: 16px;
+        &:focus{
+            border-color: #ff5a77;
+        }
     }
     .input-group i {
         position: absolute;
@@ -104,8 +107,15 @@
     @media (max-width: 768px) {
         .container {
             flex-direction: column;
+            width: 95%;
         }
         .left {
             display: none;
+        }
+        .right{
+            padding: 25px 15px;
+        }
+        .right input{
+            font-size: 15px;
         }
     }
