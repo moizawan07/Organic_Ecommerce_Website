@@ -772,6 +772,7 @@ const closeBtn = document.querySelector("#close-btn");
 const themeToggler = document.querySelector(".theme-toggler");
 // Show Orders Table
 let insightsDivMain = document.querySelector('.insights')
+let ChartsMain = document.querySelector('#ChartsMain')
 let multipleTables = document.querySelector('.recent-orders')
 let addToProductMain = document.getElementById('AddProductMainDiv')
 let mainProductDiv = document.querySelector('.allProductsMain')
@@ -803,11 +804,87 @@ themeToggler.addEventListener("click", () => {
 });
 
 
+// Dashboard Charts Show (default) & When user clicked Dashbaord button
+window.dashboardCharts = function(){
+  insightsDivMain.style.display = 'grid'
+  ChartsMain.style.display = 'block'
+  multipleTables.style.display = 'none'
+  mainProductDiv.style.display = 'none'
+  addToProductMain.style.display = 'none'
+  
+  // Charts Created Start Here  
+let monthWiseOrderChart = document.getElementById('Month-wise-Orders-Chart')
+let mostOrderProduct = document.getElementById('Most-Order-Product')
+
+// 1 chart was For the Month Wise Orders Shows
+const monthlyChart = new Chart(monthWiseOrderChart, {
+  type: 'bar', 
+  data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: [{
+          label: 'Orders per Month',
+          data: [50, 95, 150, 180, 170, 100, 70, 174, 65, 255, 95, 150],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(215, 86, 181, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(221, 82, 168)'
+          ],
+          borderWidth: 1.5
+      }]
+  },
+  options: {
+      responsive: true,
+      plugins: {
+          title: {
+              display: true,
+              text: 'Monthly Orders Overview'
+          }
+      },
+      scales: {
+          y: {
+              beginAtZero: true,
+              title: {
+                  display: true,
+                  text: 'No. of Orders'
+              }
+          },
+          x: {
+              title: {
+                  display: true,
+                  text: 'Months'
+              }
+          }
+      }
+  }
+});
+
+
+// 2 Chart was for the Most Order Product
+
+}
+
+//  Default Call this Function because Dashbaord pa jese he admin 
+// aai to ye show ho phle thats Why
+if(window.location.href.includes('dashboard')) dashboardCharts()
+
 
 // ------- SIGNUP USERS PRINT WHEN CLICK A USER BUTTON ------
-
 window.signUpUsersPrint = async function(){
-  insightsDivMain.style.display = 'grid'
+   ChartsMain.style.display = 'none'
+   insightsDivMain.style.display = 'grid'
    multipleTables.style.display = 'block'
    userTable.style.display = 'table'
    orderTable.style.display = 'none'
@@ -857,6 +934,7 @@ window.signUpUsersPrint = async function(){
 
 // Order Print
 window.ordersPrint = async function(){
+   ChartsMain.style.display = 'none'
   insightsDivMain.style.display = 'grid'
    multipleTables.style.display = 'block'
    orderTable.style.display = 'table'
@@ -931,7 +1009,7 @@ window.ordersPrint = async function(){
 
 
 // userOrderInfoCheck this Function get User Info ka kis 
-// Ne User ne Order Kiya tha Throw The uid
+//  User ne Order Kiya tha Throw The uid
 window.userOrderInfoCheckShow = async function(e){
  let userId = e.innerText
  let tdClicked = e.getBoundingClientRect()
@@ -1035,6 +1113,7 @@ window.adminOrderStatusChanged = async function(e){
 
 // Go To The All Products SEE Admin
 window.manageProducts = async function(){
+     ChartsMain.style.display = 'none'
      mainProductDiv.style.display = 'block'
      multipleTables.style.display = 'none'
      addToProductMain.style.display = 'none'
@@ -1073,6 +1152,7 @@ window.manageProducts = async function(){
 
 // Go To the Add Product Section Admin Here Add Product
 window.adminGotoTheAddProduct = function(){
+  ChartsMain.style.display = 'none'
   addToProductMain.style.display = 'block'
   mainProductDiv.style.display = 'none'
   multipleTables.style.display = 'none'

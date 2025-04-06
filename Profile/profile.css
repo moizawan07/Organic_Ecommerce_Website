@@ -218,6 +218,9 @@ h1 {
 .Decline{
     color: crimson;
 }
+#orderMsg{
+    color: rgb(74, 73, 73);
+}
 
 @media (max-width:882px) {
     .header{

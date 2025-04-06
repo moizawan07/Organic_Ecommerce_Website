@@ -27,7 +27,7 @@
         </div>
 
         <div class="sidebar">
-          <a href="#" class="active">
+          <a href="#" class="active" onclick="dashboardCharts()">
             <span class="material-icons-sharp"> dashboard </span>
            <h3>Dashboard</h3>
           </a>
@@ -139,6 +139,15 @@
             <small class="text-muted"> This Month </small>
           </div>
         </div>
+
+        <!-- Dashboard tab Charts Main Div -->
+         <div id="ChartsMain">
+            <!-- 1: Month Wise  Orders Chart  -->
+             <canvas id="Month-wise-Orders-Chart"></canvas>
+            <!-- 2: Most Order product Chart  -->
+             <canvas id="Most-Order-Product" style="display: none;"></canvas>
+             
+         </div>
 
         <div class="recent-orders"  style="display: none;">
           <h2 id="tableName"></h2>
@@ -339,7 +348,9 @@
 </div>
 
 
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
    <script type="module" src="../JavaScript/firebase.js"></script>
    <script type="module" src="../JavaScript/app.js"></script>
-  </body>
+
+ </body>
 </html>
